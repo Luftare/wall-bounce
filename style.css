@@ -3,6 +3,7 @@ body {
   justify-content: center;
   align-items: center;
   overflow: scroll;
+  background-color: #331;
 }
 
 .game {
@@ -32,6 +33,12 @@ body {
   z-index: 0;
   background-image: url('http://i448.photobucket.com/albums/qq205/splatgotoss/Grassy.png');
   background-size: 32px 32px;
+}
+
+.status {
+  display: flex;
+  color: white;
+  justify-content: space-between;
 }
 
 @keyframes death {

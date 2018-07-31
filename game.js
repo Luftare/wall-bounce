@@ -1,6 +1,6 @@
 const field = document.getElementById('game-field');
 const statusPower = document.querySelector('.status__power');
-const GRID_SIZE = 12;
+const statusFitness = document.querySelector('.status__fitness');
 const CELL_SIZE = 32;
 let game;
 let mousePosition = [0, 0];
@@ -33,6 +33,6 @@ window.addEventListener('mouseup', (e) => {
   if(magnitude(game.hero.velocity) === 0) {
     const mouseToHeroLength = magnitude(mouseToHero);
     const velocity = mouseToHero.map(val => val / mouseToHeroLength).map(val => game.hero.speed * val * Math.min(game.hero.maxStretch, mouseToHeroLength));
-    game.hero.velocity = velocity;
+    game.hero.charge(velocity);
   }
 });

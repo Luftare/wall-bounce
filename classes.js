@@ -59,6 +59,7 @@ class Princess extends Obstacle {
 class Tree extends Obstacle {
   constructor(...props) {
     super(...props);
+    this.bounciness = 0.3;
     this.element.classList.add('tree');
   }
 }
@@ -73,7 +74,7 @@ class Wall extends Obstacle {
 class Orc extends Obstacle {
   constructor(...props) {
     super(...props);
-    this.bounciness = 1.1;
+    this.bounciness = 0.9;
     this.element.classList.add('orc');
   }
 
@@ -93,6 +94,8 @@ class Hero {
   constructor(position) {
     this.maxPower = 1;
     this.power = this.maxPower;
+    this.maxFitness = 1;
+    this.fitness = this.maxFitness;
     this.size = 0.7 * CELL_SIZE;
     this.speed = 5;
     this.maxStretch = 100;
@@ -116,15 +119,16 @@ class Hero {
   }
 
   update(dt) {
-    const velocityLength = Math.sqrt(this.velocity.reduce((acc, val) => acc + val ** 2, 0));
-    this.velocity = this.velocity.map((val) => {
-      if(velocityLength > 150) return val * 0.997;
-      if(velocityLength > 10) return val * 0.97;
-      return 0;
-    });
     this.move(dt);
     this.handleCollisions();
+    this.handleFitness();
     this.render();
+  }
+
+  handleFitness() {
+    if(magnitude(this.velocity) === 0 && this.fitness <= 0) {
+      this.die();
+    }
   }
 
   fight(target) {
@@ -136,6 +140,7 @@ class Hero {
   }
 
   die() {
+    if(this.element.classList.contains('dead')) return;
     this.velocity = [0, 0];
     this.element.classList.add('dead');
     setTimeout(() => {
@@ -191,7 +196,18 @@ class Hero {
     this.handleObstacleCollisions(dt);
   }
 
+  charge(velocity) {
+    this.fitness--;
+    this.velocity = velocity;
+  }
+
   move(dt) {
+    const velocityLength = Math.sqrt(this.velocity.reduce((acc, val) => acc + val ** 2, 0));
+    this.velocity = this.velocity.map((val) => {
+      if(velocityLength > 150) return val * 0.997;
+      if(velocityLength > 10) return val * 0.97;
+      return 0;
+    });
     this.position = this.position.map((val, i) => val + this.velocity[i] * dt);
   }
 
@@ -211,6 +227,7 @@ class Hero {
     if(!game.paused) element.classList[moving ? 'add' : 'remove']('run');
 
     statusPower.innerHTML = `${this.power} Power`;
+    statusFitness.innerHTML = `${this.fitness} Fitness`;
   }
 }
 
