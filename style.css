@@ -1,0 +1,35 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#game-field {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  background-color: green;
+}
+
+.hero {
+  position: absolute;
+  display: block;
+  background-color: pink;
+  transition: all 20ms;
+}
+
+.hero__arrow {
+  display: block;
+  position: absolute;
+  width: 10px;
+  height: 100px;
+  left: 50%;
+  top: 50%;
+  background-color: red;
+  transform-origin: 50% 0;
+}
+
+.obstacle {
+  position: absolute;
+  background-color: black;
+}
