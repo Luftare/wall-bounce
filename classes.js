@@ -34,6 +34,28 @@ class Obstacle {
     this.element = element;
     field.appendChild(element);
   }
+
+  onCollision() {}
+}
+
+class Tree extends Obstacle {
+  constructor(...props) {
+    super(...props);
+    this.element.classList.add('tree');
+  }
+}
+
+class Orc extends Obstacle {
+  constructor(...props) {
+    super(...props);
+    this.element.classList.add('orc');
+    this.hp = 1;
+  }
+
+  onCollision() {
+    game.obstacles = game.obstacles.filter(obstacle => obstacle !== this);
+    this.element.classList.add('dead');
+  }
 }
 
 class Hero {
@@ -90,6 +112,7 @@ class Hero {
     game.obstacles.forEach(obstacle => {
       const collision = getSquareCollisionSide(this, obstacle);
       if(collision) {
+        obstacle.onCollision();
         switch (collision) {
           case 'TOP':
             this.position[1] = obstacle.position[1] - this.size;
@@ -143,12 +166,13 @@ class Game {
     this.loop = new Loop((dt) => {
       this.hero.update(dt);
     });
-    this.obstacles = [...Array(10)].map(() => {
+    this.obstacles = [...Array(12)].map(() => {
+      const Type = Math.random() > 0.5 ? Orc : Tree;
       const position = [
         field.offsetWidth * Math.floor(Math.random() * this.gridSize) / this.gridSize,
         field.offsetHeight * Math.floor(Math.random() * this.gridSize) / this.gridSize
       ];
-      return new Obstacle(position, field.offsetWidth / this.gridSize);
+      return new Type(position, field.offsetWidth / this.gridSize);
     });
   }
 
