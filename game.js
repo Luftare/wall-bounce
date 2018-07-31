@@ -36,7 +36,9 @@ window.addEventListener('mousemove', (e) => {
 });
 
 window.addEventListener('mouseup', (e) => {
-  const mouseToHeroLength = magnitude(mouseToHero);
-  const velocity = mouseToHero.map(val => val / mouseToHeroLength).map(val => game.hero.speed * val * Math.min(game.hero.maxStretch, mouseToHeroLength));
-  game.hero.velocity = velocity;
+  if(magnitude(game.hero.velocity) === 0) {
+    const mouseToHeroLength = magnitude(mouseToHero);
+    const velocity = mouseToHero.map(val => val / mouseToHeroLength).map(val => game.hero.speed * val * Math.min(game.hero.maxStretch, mouseToHeroLength));
+    game.hero.velocity = velocity;
+  }
 });
