@@ -208,6 +208,7 @@ class Hero {
     this.arrow.style.transform = `translate(-50%, 0) rotate(${arrowAngle}deg) translateY(${this.size * 0.7}px)`;
 
     this.arrow.classList[moving ? 'add' : 'remove']('hero__arrow--hidden');
+    if(!game.paused) element.classList[moving ? 'add' : 'remove']('run');
 
     statusPower.innerHTML = `${this.power} Power`;
   }
@@ -246,6 +247,7 @@ class Game {
     this.paused = true;
     const pricess = this.obstacles.find(obstacle => obstacle instanceof Princess);
     pricess.element.classList.add('center-left');
+    this.hero.element.classList.remove('run');
     this.hero.element.classList.add('center-right');
     this.smokeScreen.classList.add('smoke-screen--visible')
     setTimeout(() => {

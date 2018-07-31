@@ -2,6 +2,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: scroll;
 }
 
 .game {
@@ -27,16 +28,50 @@ body {
 
 #game-field {
   position: relative;
-  width: 400px;
-  height: 400px;
   background-color: green;
   z-index: 0;
+  background-image: url('http://i448.photobucket.com/albums/qq205/splatgotoss/Grassy.png');
+  background-size: 32px 32px;
+}
+
+@keyframes death {
+  0% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 1;
+    transform: translate(0, -20px) rotate(60deg);
+  }
+  30% {
+    transform: rotate(90deg) translateX(3px) scale(0.9, 1);
+    opacity: 1;
+  }
+  34% {
+    transform: rotate(90deg);
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(90deg);
+  }
+}
+
+@keyframes run {
+  0% {
+    transform: rotate(-15deg);
+  }
+  100% {
+    transform: rotate(15deg);
+  }
 }
 
 .hero {
   position: absolute;
   display: block;
-  background-color: lightblue;
+  background-image: url('http://www.nonadecimal.com/staging/SJW/paladin.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
   transition: top 20ms, left 20ms;
   z-index: 20;
 }
@@ -69,35 +104,15 @@ body {
   display: none;
 }
 
-@keyframes death {
-  0% {
-    opacity: 1;
-  }
-  20% {
-    opacity: 1;
-    transform: translate(0, -20px) rotate(60deg);
-  }
-  30% {
-    transform: rotate(90deg) translateX(3px) scale(0.9, 1);
-    opacity: 1;
-  }
-  34% {
-    transform: rotate(90deg);
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: rotate(90deg);
-  }
-}
-
 .obstacle {
   position: absolute;
-  background-color: black;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .orc {
-  background-color: lightgreen;
+  background-image: url('https://forum.psnprofiles.com/applications/core/interface/imageproxy/imageproxy.php?img=http://www.pixelchampions.com/images/a/m002804.png&key=5c89352545034ca07cb4e3806a157a820ce3b915aab98d2e3ac755d6480ba137');
 }
 
 .dead {
@@ -105,16 +120,20 @@ body {
   opacity: 0;
 }
 
+.run {
+  animation: run 200ms infinite alternate linear;
+}
+
 .tree {
-  background-color: brown;
+  background-image: url('https://i.imgur.com/7jWTJUW.png');
 }
 
 .wall {
-  background-color: grey;
+  background-image: url('https://orig00.deviantart.net/1502/f/2014/155/5/3/walltile_1_by_sarahstudiosart-d7l2g11.png');
 }
 
 .princess {
-  background-color: pink;
+  background-image: url('https://data.whicdn.com/images/80478767/large.png');
   z-index: 20;
 }
 
