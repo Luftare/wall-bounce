@@ -1,10 +1,3 @@
-//warrior tries to resque princess
-//obstacles as grid positions
-//trees and rocks bounce back the warrior
-//orcs will bounce once
-//other baddies might take more damage before they disappear and let through
-//
-
 const field = document.getElementById('game-field');
 const statusPower = document.querySelector('.status__power');
 const GRID_SIZE = 12;
