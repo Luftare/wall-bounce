@@ -6,7 +6,7 @@
 //
 
 const field = document.getElementById('game-field');
-const statusHp = document.querySelector('.status__hp');
+const statusPower = document.querySelector('.status__power');
 const GRID_SIZE = 12;
 let game;
 let mousePosition = [0, 0];

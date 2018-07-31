@@ -70,7 +70,7 @@ class Wall extends Obstacle {
 class Orc extends Obstacle {
   constructor(...props) {
     super(...props);
-    this.bounciness = 0.9;
+    this.bounciness = 1.1;
     this.element.classList.add('orc');
   }
 
@@ -78,7 +78,8 @@ class Orc extends Obstacle {
     game.obstacles = game.obstacles.filter(obstacle => obstacle !== this);
     this.element.classList.add('dead');
     game.timeFactor = 0.2;
-    game.hero.receiveDamage(1);
+    game.hero.fight(this);
+
     setTimeout(() => {
       game.timeFactor = 1;
     }, 200);
@@ -87,7 +88,8 @@ class Orc extends Obstacle {
 
 class Hero {
   constructor(position) {
-    this.hp = 1;
+    this.maxPower = 1;
+    this.power = this.maxPower;
     this.size = 0.7 * field.offsetWidth / GRID_SIZE;
     this.speed = 5;
     this.maxStretch = 100;
@@ -122,16 +124,20 @@ class Hero {
     this.render();
   }
 
-  receiveDamage(amount) {
-    if(this.hp <= 0) return;
-    this.hp -= amount;
-    if(this.hp <= 0) {
-      this.element.classList.add('dead');
-      this.velocity = [0, 0];
-      setTimeout(() => {
-        game.generateLevel();
-      }, 3000);
+  fight(target) {
+    if(this.power < 0) return;
+    this.power--;
+    if(this.power < 0) {
+      this.die();
     };
+  }
+
+  die() {
+    this.velocity = [0, 0];
+    this.element.classList.add('dead');
+    setTimeout(() => {
+      game.generateLevel();
+    }, 3000);
   }
 
   handleBoundaryCollisions(dt) {
@@ -192,12 +198,15 @@ class Hero {
     const { element, arrow } = this;
     const [heroX, heroY] = this.position;
     const arrowAngle = -Math.atan2(...mouseToHero) * 180 / Math.PI;
+    const moving = magnitude(this.velocity) > 0;
     element.style.left = `${heroX}px`;
     element.style.top = `${heroY}px`;
     this.arrow.style.height = `${Math.max(0, Math.min(this.maxStretch, mouseToHeroLength) / 200) * 120}px`;
     this.arrow.style.transform = `translate(-50%, 0) rotate(${arrowAngle}deg) translateY(${this.size * 0.7}px)`;
 
-    statusHp.innerHTML = `${this.hp} HP`;
+    this.arrow.classList[moving ? 'add' : 'remove']('hero__arrow--hidden');
+
+    statusPower.innerHTML = `${this.power} Power`;
   }
 }
 
