@@ -4,19 +4,41 @@ body {
   align-items: center;
 }
 
+.game {
+  position: relative;
+}
+
+.smoke-screen {
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 10;
+  transition: opacity 500ms;
+  opacity: 0;
+}
+
+.smoke-screen--visible {
+  opacity: 1;
+}
+
 #game-field {
   position: relative;
   width: 400px;
   height: 400px;
   background-color: green;
-  z-index: -10;
+  z-index: 0;
 }
 
 .hero {
   position: absolute;
   display: block;
   background-color: lightblue;
-  transition: all 20ms;
+  transition: top 20ms, left 20ms;
+  z-index: 20;
 }
 
 .hero__arrow {
@@ -31,10 +53,18 @@ body {
   background-size: 20px 50px;
   background-repeat: no-repeat;
   background-position: 50% 100%;
-  z-index: -1;
+  z-index: 9;
 }
 
-@keyframes orc-death {
+.hero.center-right .hero__arrow {
+  display: none;
+}
+
+.hero.dead .hero__arrow {
+  display: none;
+}
+
+@keyframes death {
   0% {
     opacity: 1;
   }
@@ -59,7 +89,6 @@ body {
 .obstacle {
   position: absolute;
   background-color: black;
-  transition: all 1s;
 }
 
 .orc {
@@ -67,10 +96,33 @@ body {
 }
 
 .dead {
-  animation: orc-death 1.8s;
+  animation: death 1.8s;
   opacity: 0;
 }
 
 .tree {
   background-color: brown;
+}
+
+.wall {
+  background-color: grey;
+}
+
+.princess {
+  background-color: pink;
+  z-index: 20;
+}
+
+.center-left {
+  transition: all 1s;
+  left: calc(50% - 20px) !important;
+  top: calc(50%) !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+.center-right {
+  transition: all 1s;
+  left: calc(50% + 20px) !important;
+  top: calc(50%) !important;
+  transform: translate(-50%, -50%) !important;
 }

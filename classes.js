@@ -21,9 +21,10 @@ class Loop {
 }
 
 class Obstacle {
-  constructor(position, size) {
+  constructor(position) {
     this.position = [...position];
-    this.size = size;
+    this.size = field.offsetWidth / GRID_SIZE;
+    this.bounciness = 0.5;
 
     const element = document.createElement('div');
     element.style.width = `${this.size}px`;
@@ -38,6 +39,20 @@ class Obstacle {
   onCollision() {}
 }
 
+class Princess extends Obstacle {
+  constructor(...props) {
+    super(...props);
+    this.size = 0.7 * field.offsetWidth / GRID_SIZE;
+    this.element.style.width = `${this.size}px`;
+    this.element.style.height = `${this.size}px`;
+    this.element.classList.add('princess');
+  }
+
+  onCollision() {
+    game.finishLevel();
+  }
+}
+
 class Tree extends Obstacle {
   constructor(...props) {
     super(...props);
@@ -45,26 +60,39 @@ class Tree extends Obstacle {
   }
 }
 
+class Wall extends Obstacle {
+  constructor(...props) {
+    super(...props);
+    this.element.classList.add('wall');
+  }
+}
+
 class Orc extends Obstacle {
   constructor(...props) {
     super(...props);
+    this.bounciness = 0.9;
     this.element.classList.add('orc');
-    this.hp = 1;
   }
 
   onCollision() {
     game.obstacles = game.obstacles.filter(obstacle => obstacle !== this);
     this.element.classList.add('dead');
+    game.timeFactor = 0.2;
+    game.hero.receiveDamage(1);
+    setTimeout(() => {
+      game.timeFactor = 1;
+    }, 200);
   }
 }
 
 class Hero {
-  constructor(size) {
-    this.size = size;
+  constructor(position) {
+    this.hp = 1;
+    this.size = 0.7 * field.offsetWidth / GRID_SIZE;
     this.speed = 5;
     this.maxStretch = 100;
-    this.position = [0, 0];
-    this.velocity = [90, 30];
+    this.position = position;
+    this.velocity = [0, 0];
     this.bounciness = 0.5;
 
     const element = document.createElement('div');
@@ -94,6 +122,18 @@ class Hero {
     this.render();
   }
 
+  receiveDamage(amount) {
+    if(this.hp <= 0) return;
+    this.hp -= amount;
+    if(this.hp <= 0) {
+      this.element.classList.add('dead');
+      this.velocity = [0, 0];
+      setTimeout(() => {
+        game.generateLevel();
+      }, 3000);
+    };
+  }
+
   handleBoundaryCollisions(dt) {
     const bounds = [field.offsetWidth, field.offsetHeight];
     this.position.forEach((_, i) => {
@@ -116,19 +156,19 @@ class Hero {
         switch (collision) {
           case 'TOP':
             this.position[1] = obstacle.position[1] - this.size;
-            this.velocity = this.velocity.map((val, i) => i === 1? -Math.abs(val * this.bounciness) : val * this.bounciness);
+            this.velocity = this.velocity.map((val, i) => i === 1? -Math.abs(val * obstacle.bounciness) : val * obstacle.bounciness);
             break;
           case 'RIGHT':
             this.position[0] = obstacle.position[0] + obstacle.size;
-            this.velocity = this.velocity.map((val, i) => i === 0? Math.abs(val * this.bounciness) : val * this.bounciness);
+            this.velocity = this.velocity.map((val, i) => i === 0? Math.abs(val * obstacle.bounciness) : val * obstacle.bounciness);
             break;
           case 'BOTTOM':
             this.position[1] = obstacle.position[1] + obstacle.size;
-            this.velocity = this.velocity.map((val, i) => i === 1? Math.abs(val * this.bounciness) : val * this.bounciness);
+            this.velocity = this.velocity.map((val, i) => i === 1? Math.abs(val * obstacle.bounciness) : val * obstacle.bounciness);
             break;
           case 'LEFT':
             this.position[0] = obstacle.position[0] - this.size;
-            this.velocity = this.velocity.map((val, i) => i === 0? -Math.abs(val * this.bounciness) : val * this.bounciness);
+            this.velocity = this.velocity.map((val, i) => i === 0? -Math.abs(val * obstacle.bounciness) : val * obstacle.bounciness);
             break;
           default:
 
@@ -155,25 +195,50 @@ class Hero {
     element.style.left = `${heroX}px`;
     element.style.top = `${heroY}px`;
     this.arrow.style.height = `${Math.max(0, Math.min(this.maxStretch, mouseToHeroLength) / 200) * 120}px`;
-    this.arrow.style.transform = `translate(-50%, 0) rotate(${arrowAngle}deg) translateY(${this.size * 0.3}px)`;
+    this.arrow.style.transform = `translate(-50%, 0) rotate(${arrowAngle}deg) translateY(${this.size * 0.7}px)`;
+
+    statusHp.innerHTML = `${this.hp} HP`;
   }
 }
 
 class Game {
   constructor() {
-    this.gridSize = 12;
-    this.hero = new Hero(0.7 * field.offsetWidth / this.gridSize);
+    this.timeFactor = 1;
+    this.paused = false;
     this.loop = new Loop((dt) => {
-      this.hero.update(dt);
+      if(this.paused) return;
+      this.hero.update(dt * this.timeFactor);
     });
-    this.obstacles = [...Array(12)].map(() => {
-      const Type = Math.random() > 0.5 ? Orc : Tree;
+    this.generateLevel();
+  }
+
+  generateLevel() {
+    field.innerHTML = '';
+    this.smokeScreen = document.createElement('div');
+    this.smokeScreen.classList.add('smoke-screen');
+    field.appendChild(this.smokeScreen);
+    this.hero = new Hero([0, 0]);
+    this.obstacles = [...Array(6)].map(() => {
+      const Type = [Orc, Wall, Tree][Math.floor(Math.random() * 3)]
       const position = [
-        field.offsetWidth * Math.floor(Math.random() * this.gridSize) / this.gridSize,
-        field.offsetHeight * Math.floor(Math.random() * this.gridSize) / this.gridSize
+        field.offsetWidth * Math.floor(Math.random() * GRID_SIZE) / GRID_SIZE,
+        field.offsetHeight * Math.floor(Math.random() * GRID_SIZE) / GRID_SIZE
       ];
-      return new Type(position, field.offsetWidth / this.gridSize);
+      return new Type(position);
     });
+    this.obstacles.push(new Princess([field.offsetWidth * (9.15 / GRID_SIZE), field.offsetHeight * (9.15 / GRID_SIZE)]))
+  }
+
+  finishLevel() {
+    this.paused = true;
+    const pricess = this.obstacles.find(obstacle => obstacle instanceof Princess);
+    pricess.element.classList.add('center-left');
+    this.hero.element.classList.add('center-right');
+    this.smokeScreen.classList.add('smoke-screen--visible')
+    setTimeout(() => {
+      this.paused = false;
+      this.generateLevel();
+    }, 4000);
   }
 
   start() {
