@@ -9,24 +9,29 @@ body {
   width: 400px;
   height: 400px;
   background-color: green;
+  z-index: -10;
 }
 
 .hero {
   position: absolute;
   display: block;
-  background-color: pink;
+  background-color: lightblue;
   transition: all 20ms;
 }
 
 .hero__arrow {
   display: block;
   position: absolute;
-  width: 10px;
-  height: 100px;
+  width: 20px;
+  height: 80px;
   left: 50%;
   top: 50%;
-  background-color: red;
   transform-origin: 50% 0;
+  background-image: url('https://vignette.wikia.nocookie.net/community-sitcom/images/7/7b/Arrow_down.png/revision/latest?cb=20131015141652');
+  background-size: 20px 50px;
+  background-repeat: no-repeat;
+  background-position: 50% 100%;
+  z-index: -1;
 }
 
 .obstacle {

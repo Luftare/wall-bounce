@@ -128,10 +128,11 @@ class Hero {
     const mouseToHeroLength = magnitude(mouseToHero);
     const { element, arrow } = this;
     const [heroX, heroY] = this.position;
-    const arrowAngle = -Math.atan2(...mouseToHero) * 180 / Math.PI + Math.PI;
+    const arrowAngle = -Math.atan2(...mouseToHero) * 180 / Math.PI;
     element.style.left = `${heroX}px`;
     element.style.top = `${heroY}px`;
-    this.arrow.style.transform = `translate(-50%, 0) rotate(${arrowAngle}deg) translateY(${this.size * 1.2}px) scaleY(${Math.min(this.maxStretch, mouseToHeroLength) / 200})`;
+    this.arrow.style.height = `${Math.max(0, Math.min(this.maxStretch, mouseToHeroLength) / 200) * 120}px`;
+    this.arrow.style.transform = `translate(-50%, 0) rotate(${arrowAngle}deg) translateY(${this.size * 0.3}px)`;
   }
 }
 
