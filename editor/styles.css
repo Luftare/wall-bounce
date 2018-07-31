@@ -1,0 +1,54 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #eee;
+}
+
+h4, h3 {
+  margin: 0;
+}
+
+.game {
+  position: relative;
+}
+
+#game-field {
+  position: relative;
+  background-color: green;
+  width: 320px;
+  height: 320px;
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Color_icon_green.svg/2000px-Color_icon_green.svg.png');
+  background-size: 32px 32px;
+}
+
+.obstacle {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: grey;
+  width: 32px;
+  height: 32px;
+  font-size: 8px;
+}
+
+.wall {
+  background-color: grey;
+}
+
+.tree {
+  background-color: brown;
+}
+
+.orc {
+  background-color: red;
+}
+
+.princess {
+  background-color: pink;
+}
+
+.hero {
+  background-color: lightblue;
+}

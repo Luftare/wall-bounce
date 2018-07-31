@@ -94,12 +94,12 @@ class Hero {
   constructor(position) {
     this.maxPower = 1;
     this.power = this.maxPower;
-    this.maxFitness = 1;
+    this.maxFitness = 3;
     this.fitness = this.maxFitness;
     this.size = 0.7 * CELL_SIZE;
     this.speed = 5;
     this.maxStretch = 100;
-    this.position = position.map(val => CELL_SIZE * val);
+    this.position = position.map(val => CELL_SIZE * (val + 0.15));
     this.velocity = [0, 0];
     this.bounciness = 0.5;
 
@@ -262,6 +262,7 @@ class Game {
 
   finishLevel() {
     this.paused = true;
+    this.level++;
     const pricess = this.obstacles.find(obstacle => obstacle instanceof Princess);
     pricess.element.classList.add('center-left');
     this.hero.element.classList.remove('run');
