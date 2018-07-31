@@ -1,6 +1,7 @@
 const field = document.getElementById('game-field');
 const statusPower = document.querySelector('.status__power');
 const GRID_SIZE = 12;
+const CELL_SIZE = 32;
 let game;
 let mousePosition = [0, 0];
 let mouseToHero = [10, 10];

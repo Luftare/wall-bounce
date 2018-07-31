@@ -22,8 +22,8 @@ class Loop {
 
 class Obstacle {
   constructor(position) {
-    this.position = [...position];
-    this.size = field.offsetWidth / GRID_SIZE;
+    this.position = position.map(val => CELL_SIZE * val);
+    this.size = CELL_SIZE;
     this.bounciness = 0.5;
 
     const element = document.createElement('div');
@@ -42,7 +42,10 @@ class Obstacle {
 class Princess extends Obstacle {
   constructor(...props) {
     super(...props);
-    this.size = 0.7 * field.offsetWidth / GRID_SIZE;
+    this.position = this.position.map(val => val + 0.15 * CELL_SIZE);
+    this.element.style.left = `${this.position[0]}px`;
+    this.element.style.top = `${this.position[1]}px`;
+    this.size = CELL_SIZE * 0.7;
     this.element.style.width = `${this.size}px`;
     this.element.style.height = `${this.size}px`;
     this.element.classList.add('princess');
@@ -90,10 +93,10 @@ class Hero {
   constructor(position) {
     this.maxPower = 1;
     this.power = this.maxPower;
-    this.size = 0.7 * field.offsetWidth / GRID_SIZE;
+    this.size = 0.7 * CELL_SIZE;
     this.speed = 5;
     this.maxStretch = 100;
-    this.position = position;
+    this.position = position.map(val => CELL_SIZE * val);
     this.velocity = [0, 0];
     this.bounciness = 0.5;
 
@@ -136,7 +139,7 @@ class Hero {
     this.velocity = [0, 0];
     this.element.classList.add('dead');
     setTimeout(() => {
-      game.generateLevel();
+      game.loadLevel(game.level);
     }, 3000);
   }
 
@@ -212,30 +215,31 @@ class Hero {
 
 class Game {
   constructor() {
+    this.level = 0;
     this.timeFactor = 1;
     this.paused = false;
     this.loop = new Loop((dt) => {
       if(this.paused) return;
       this.hero.update(dt * this.timeFactor);
     });
-    this.generateLevel();
+    this.loadLevel(this.level);
   }
 
-  generateLevel() {
+  loadLevel(index) {
+    const level = levels[index];
     field.innerHTML = '';
     this.smokeScreen = document.createElement('div');
     this.smokeScreen.classList.add('smoke-screen');
     field.appendChild(this.smokeScreen);
-    this.hero = new Hero([0, 0]);
-    this.obstacles = [...Array(6)].map(() => {
-      const Type = [Orc, Wall, Tree][Math.floor(Math.random() * 3)]
-      const position = [
-        field.offsetWidth * Math.floor(Math.random() * GRID_SIZE) / GRID_SIZE,
-        field.offsetHeight * Math.floor(Math.random() * GRID_SIZE) / GRID_SIZE
-      ];
-      return new Type(position);
-    });
-    this.obstacles.push(new Princess([field.offsetWidth * (9.15 / GRID_SIZE), field.offsetHeight * (9.15 / GRID_SIZE)]))
+    field.style.width = `${level.size[0] * CELL_SIZE}px`;
+    field.style.height = `${level.size[1] * CELL_SIZE}px`;
+    this.hero = new Hero(level.hero);
+    this.obstacles = [
+      ...level.trees.map(position => new Tree(position)),
+      ...level.walls.map(position => new Wall(position)),
+      ...level.orcs.map(position => new Orc(position)),
+      new Princess(level.princess)
+    ];
   }
 
   finishLevel() {
@@ -246,7 +250,7 @@ class Game {
     this.smokeScreen.classList.add('smoke-screen--visible')
     setTimeout(() => {
       this.paused = false;
-      this.generateLevel();
+      this.loadLevel(this.level);
     }, 4000);
   }
 
