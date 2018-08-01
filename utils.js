@@ -17,3 +17,7 @@ function getSquareCollisionSide(a, b) {
 function magnitude(vec) {
   return Math.sqrt(vec.reduce((acc, val) => acc + val ** 2, 0));
 }
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}

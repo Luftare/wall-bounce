@@ -100,6 +100,7 @@ class Hero {
     this.speed = 5;
     this.maxStretch = 100;
     this.position = position.map(val => CELL_SIZE * (val + 0.15));
+    console.log(position, this.position)
     this.velocity = [0, 0];
     this.bounciness = 0.5;
 
@@ -249,13 +250,24 @@ class Game {
     this.smokeScreen = document.createElement('div');
     this.smokeScreen.classList.add('smoke-screen');
     field.appendChild(this.smokeScreen);
-    field.style.width = `${level.size[0] * CELL_SIZE}px`;
-    field.style.height = `${level.size[1] * CELL_SIZE}px`;
+    field.style.width = `${level.mapSize[0] * CELL_SIZE}px`;
+    field.style.height = `${level.mapSize[1] * CELL_SIZE}px`;
+    console.log(field.style.width, field.style.height)
     this.hero = new Hero(level.hero);
     this.obstacles = [
-      ...level.trees.map(position => new Tree(position)),
-      ...level.walls.map(position => new Wall(position)),
-      ...level.orcs.map(position => new Orc(position)),
+      ...level.obstacles.map(o => {
+        switch (o.type) {
+          case 'orc':
+            return new Orc(o.position);
+            break;
+          case 'tree':
+            return new Tree(o.position);
+            break;
+          case 'wall':
+            return new Wall(o.position);
+            break;
+        }
+      }),
       new Princess(level.princess)
     ];
   }
