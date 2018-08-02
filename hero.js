@@ -69,10 +69,14 @@ class Hero {
     const bounds = [field.offsetWidth, field.offsetHeight];
     this.position.forEach((_, i) => {
       if(this.position[i] < 0) {
+        if(i === 0 && !isNaN(game.edgeLinks[3])) router.goTo(`/levels/${game.edgeLinks[3]}`);//left edge
+        if(i === 1 && !isNaN(game.edgeLinks[0])) router.goTo(`/levels/${game.edgeLinks[0]}`);//top edge
         this.position[i] = 0;
         this.velocity = this.velocity.map((val, j) => i === j? Math.abs(val * this.bounciness) : val * this.bounciness);
       }
       if(this.position[i] + this.size > bounds[i]) {
+        if(i === 0 && !isNaN(game.edgeLinks[1])) router.goTo(`/levels/${game.edgeLinks[1]}`);//right edge
+        if(i === 1 && !isNaN(game.edgeLinks[2])) router.goTo(`/levels/${game.edgeLinks[2]}`);//bottom edge
         this.position[i] = bounds[i] - this.size;
         this.velocity = this.velocity.map((val, j) => i === j? -Math.abs(val * this.bounciness) : val * this.bounciness);
       }

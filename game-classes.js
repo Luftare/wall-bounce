@@ -41,6 +41,7 @@ class Obstacle {
 
 class Game {
   constructor() {
+    this.edgeLinks = [];
     this.level = 0;
     this.timeFactor = 1;
     this.paused = true;
@@ -53,6 +54,7 @@ class Game {
 
   loadLevel(index) {
     const level = levels[index];
+    this.edgeLinks = level.edgeLinks;
     field.innerHTML = '';
     this.paused = false;
     this.level = index;
@@ -105,7 +107,7 @@ class Game {
     document.querySelector('.smoke__text').innerHTML = parseDialog(level.endNote);
     document.querySelector('.smoke__button').innerHTML = level.endNoteButtonText || '';
     document.querySelector('.smoke__button').addEventListener('click', () => {
-      router.goTo(`/level/${nextLevelIndex}`);
+      router.goTo(`/levels/${nextLevelIndex}`);
     });
     this.smokeScreen.classList.add('smoke-screen--visible');
     document.querySelector('.story').classList.add('invisible');

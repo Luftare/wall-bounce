@@ -24,9 +24,9 @@ function capitalizeFirstLetter(string) {
 
 function parseDialog(text = '') {
   let res = text
-    .replace('HERO:', '<br><span class="speech speech--hero">HERO:</span>')
-    .replace('PRINCESS:', '<br><span class="speech speech--princess">PRINCESS:</span>')
-    .replace('ORC:', '<br><span class="speech speech--orc">ORC:</span>')
+    .split('HERO:').join('<br><span class="speech speech--hero">HERO:</span>')
+    .split('PRINCESS:').join('<br><span class="speech speech--princess">PRINCESS:</span>')
+    .split('ORC:').join('<br><span class="speech speech--orc">ORC:</span>')
   if(res.substr(0,4) === '<br>') res = res.substr(4);
   return res;
 }

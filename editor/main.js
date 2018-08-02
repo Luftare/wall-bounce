@@ -23,13 +23,20 @@ document.getElementById('export-json').addEventListener('click', () => {
   const story = document.getElementById('story-editor').value;
   const endNote = document.getElementById('end-note-editor').value;
   const endNoteButtonText = document.getElementById('end-note-button-text-editor').value;
+  const edgeLinks = [
+    parseInt(document.getElementById('map-tools__link-top').value),
+    parseInt(document.getElementById('map-tools__link-right').value),
+    parseInt(document.getElementById('map-tools__link-bottom').value),
+    parseInt(document.getElementById('map-tools__link-left').value)
+  ];
   const data = {
     mapSize,
     hero: heroPosition,
     obstacles,
     story,
     endNote,
-    endNoteButtonText
+    endNoteButtonText,
+    edgeLinks
   };
   const json = JSON.stringify(data);
   document.getElementById('json-editor').value = json;
@@ -41,6 +48,10 @@ document.getElementById('json-editor').addEventListener('input', (e) => {
     const json = e.target.value;
     const data = JSON.parse(json);
     mapSize = data.mapSize;
+    document.getElementById('map-tools__link-top').value = isNaN(data.edgeLinks[0]) ? '' : data.edgeLinks[0];
+    document.getElementById('map-tools__link-right').value = isNaN(data.edgeLinks[1]) ? '' : data.edgeLinks[1];
+    document.getElementById('map-tools__link-bottom').value = isNaN(data.edgeLinks[2]) ? '' : data.edgeLinks[2];
+    document.getElementById('map-tools__link-left').value = isNaN(data.edgeLinks[3]) ? '' : data.edgeLinks[3];
     document.getElementById('story-editor').value = data.story || '';
     document.getElementById('end-note-editor').value = data.endNote || '';
     document.getElementById('end-note-button-text-editor').value = data.endNoteButtonText || '';

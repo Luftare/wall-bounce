@@ -11,7 +11,7 @@ window.addEventListener('load', () => {
   game = new Game();
   game.start();
 
-  router.add('/level/:index', ({ index }) => {
+  router.add('/levels/:index', ({ index }) => {
     game.loadLevel(index)
   });
 
