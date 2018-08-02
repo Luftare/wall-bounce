@@ -1,7 +1,8 @@
 body {
+  margin: 0;
   display: grid;
   grid-template-columns: 300px auto;
-  grid-gap: 16px;
+  grid-template-rows: 100vh;
   background-color: #eee;
 }
 
@@ -9,15 +10,24 @@ h4, h3 {
   margin: 0;
 }
 
+textarea {
+  height: 150px;
+}
+
 .game {
+  background-color: #444;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .tools {
   display: grid;
-  grid-gap: 16px;
+  grid-gap: 24px;
   background-color: #aaa;
   padding: 8px;
+  overflow: scroll;
 }
 
 #game-field {
@@ -54,7 +64,7 @@ input:checked + label {
   grid-template-columns: 1fr 1fr;
 }
 
-.export-tools {
+.export-tools, .story-tools {
   display: flex;
   flex-direction: column;
 }

@@ -1,9 +1,10 @@
 body {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow: scroll;
-  background-color: #331;
+  background-color: #111;
 }
 
 .game {
@@ -35,7 +36,7 @@ body {
   background-size: 32px 32px;
 }
 
-.status {
+.stats {
   display: flex;
   color: white;
   justify-content: space-between;
@@ -161,6 +162,35 @@ body {
 .picked-up {
   animation: pick-up 200ms;
   opacity: 0;
+}
+
+.story {
+  margin-top: 8px;
+  color: #fff;
+  padding: 8px;
+  background-color: #440;
+  font-size: 16px;
+  text-align: center;
+}
+
+.story br {
+  font-size: 20px;
+}
+
+.speech {
+  margin-right: 2px;
+}
+
+.speech--hero {
+  color: lightblue;
+}
+
+.speech--princess {
+  color: pink;
+}
+
+.speech--orc {
+  color: lightgreen;
 }
 
 .center-left {

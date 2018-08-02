@@ -23,11 +23,13 @@ window.addEventListener('load', () => {
 })
 
 document.getElementById('export-json').addEventListener('click', () => {
+  const story = document.getElementById('story-editor').value;
   const data = {
     mapSize,
     hero: heroPosition,
     princess: princessPosition,
-    obstacles
+    obstacles,
+    story
   };
   const json = JSON.stringify(data);
   document.getElementById('json-editor').value = json;
@@ -39,6 +41,7 @@ document.getElementById('json-editor').addEventListener('input', (e) => {
     const data = JSON.parse(json);
     mapSize = data.mapSize;
     obstacles = data.obstacles;
+    document.getElementById('story-editor').value = data.story || '';
     field.style.width = `${mapSize[0] * CELL_SIZE}px`;
     field.style.height = `${mapSize[1] * CELL_SIZE}px`;
     obstacles.forEach(obstacle => createObstacle(obstacle.type, obstacle.position));

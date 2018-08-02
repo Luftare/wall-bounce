@@ -1,6 +1,6 @@
 const field = document.getElementById('game-field');
-const statusPower = document.querySelector('.status__power');
-const statusFitness = document.querySelector('.status__fitness');
+const statusPower = document.querySelector('.stats__power');
+const statusFitness = document.querySelector('.stats__fitness');
 const CELL_SIZE = 32;
 let game;
 let mousePosition = [0, 0];
