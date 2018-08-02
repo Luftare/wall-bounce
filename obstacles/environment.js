@@ -2,7 +2,7 @@ class Tree extends Obstacle {
   constructor(...props) {
     super(...props);
     this.bounciness = 0.3;
-    this.element.style.backgroundImage = "url('https://i.imgur.com/7jWTJUW.png')";
+    this.element.style.backgroundImage = "url('assets/images/tree.svg')";
   }
 }
 

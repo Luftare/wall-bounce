@@ -65,7 +65,7 @@ class Hero {
     this.element.classList.add("dead");
     setTimeout(() => {
       game.loadLevel(game.level);
-    }, 3000);
+    }, 2500);
   }
 
   handleBoundaryCollisions(dt) {

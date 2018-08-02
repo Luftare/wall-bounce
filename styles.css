@@ -67,8 +67,8 @@ body {
   position: relative;
   background-color: green;
   z-index: 0;
-  background-image: url("http://i448.photobucket.com/albums/qq205/splatgotoss/Grassy.png");
-  background-size: 32px 32px;
+  background-image: url("assets/images/grass-tile.svg");
+  background-size: 16px 16px;
 }
 
 .stats {
@@ -237,7 +237,7 @@ body {
   transition: all 1s;
   left: calc(50%) !important;
   top: calc(20%) !important;
-  transform: translate(-50%, -50%) !important;
+  transform: translate(-50%, -50%) scale(2, 2) !important;
 }
 
 .center-left {
