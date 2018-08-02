@@ -10,8 +10,6 @@ const types = [HERO, PRINCESS, TREE, ORC, WALL, FLOWER];
 const CELL_SIZE = 32;
 const field = document.getElementById('game-field');
 let mapSize = [10, 10];
-let princess = null;
-let princessPosition = null;
 let hero = null;
 let heroPosition = null;
 let selectedObstacle = 'princess';
@@ -19,37 +17,40 @@ let obstacles = [];
 
 window.addEventListener('load', () => {
   createObstacle(HERO, [0, 0]);
-  createObstacle(PRINCESS, [5, 5]);
 })
 
 document.getElementById('export-json').addEventListener('click', () => {
   const story = document.getElementById('story-editor').value;
+  const endNote = document.getElementById('end-note-editor').value;
+  const endNoteButtonText = document.getElementById('end-note-button-text-editor').value;
   const data = {
     mapSize,
     hero: heroPosition,
-    princess: princessPosition,
     obstacles,
-    story
+    story,
+    endNote,
+    endNoteButtonText
   };
   const json = JSON.stringify(data);
   document.getElementById('json-editor').value = json;
 })
 
 document.getElementById('json-editor').addEventListener('input', (e) => {
-  const json = e.target.value;
   try {
+    obstacles = [];
+    const json = e.target.value;
     const data = JSON.parse(json);
     mapSize = data.mapSize;
-    obstacles = data.obstacles;
     document.getElementById('story-editor').value = data.story || '';
+    document.getElementById('end-note-editor').value = data.endNote || '';
+    document.getElementById('end-note-button-text-editor').value = data.endNoteButtonText || '';
     field.style.width = `${mapSize[0] * CELL_SIZE}px`;
     field.style.height = `${mapSize[1] * CELL_SIZE}px`;
-    obstacles.forEach(obstacle => createObstacle(obstacle.type, obstacle.position));
+    data.obstacles.forEach(obstacle => createObstacle(obstacle.type, obstacle.position));
     createObstacle(HERO, data.hero);
-    createObstacle(PRINCESS, data.princess);
   }
   catch(err) {
-    throw new Error(err)
+
   }
 });
 
@@ -96,12 +97,12 @@ function createObstacle(type, position) {
     e.stopPropagation();
     selectedObstacle = type;
     document.getElementById(`character-tools__${type}`).checked = true;
-    if(type !== HERO && type !== PRINCESS) {
+    if(type !== HERO) {
       obstacles = obstacles.filter(o => o !== obstacle);
       field.removeChild(element);
     }
   });
-  if(type !== HERO && type !== PRINCESS) {
+  if(type !== HERO) {
     obstacles.push(obstacle);
   }
 
@@ -109,11 +110,6 @@ function createObstacle(type, position) {
     if(hero) field.removeChild(hero);
     hero = element;
     heroPosition = position;
-  }
-  if(type === PRINCESS) {
-    if(princess) field.removeChild(princess);
-    princess = element;
-    princessPosition = position;
   }
   field.appendChild(element);
 }

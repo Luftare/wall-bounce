@@ -266,13 +266,12 @@ class Game {
 
   loadLevel(index) {
     const level = levels[index];
-    document.querySelector('.story').innerHTML = parseDialog(level.story);
+    field.innerHTML = '';
     this.paused = false;
     this.level = index;
-    field.innerHTML = '';
-    this.smokeScreen = document.createElement('div');
-    this.smokeScreen.classList.add('smoke-screen');
-    field.appendChild(this.smokeScreen);
+    this.smokeScreen = this.createSmokeScreen();
+    document.querySelector('.story').innerHTML = parseDialog(level.story);
+    document.querySelector('.story').classList.remove('invisible');
     field.style.width = `${level.mapSize[0] * CELL_SIZE}px`;
     field.style.height = `${level.mapSize[1] * CELL_SIZE}px`;
     this.hero = new Hero(level.hero);
@@ -291,20 +290,38 @@ class Game {
           case 'flower':
             return new Flower(o.position);
             break;
+          case 'princess':
+            return new Princess(o.position);
+            break;
         }
-      }),
-      new Princess(level.princess)
+      })
     ];
   }
 
+  createSmokeScreen() {
+    const element = document.createElement('div');
+    element.classList.add('smoke-screen');
+    element.innerHTML = `
+      <div class="smoke__content">
+        <div class="smoke__text"></div>
+        <button class="smoke__button"></button>
+      </div>
+    `;
+    field.appendChild(element);
+    return element;
+  }
+
   finishLevel() {
+    const level = levels[this.level];
     this.paused = true;
     this.hero.element.classList.add('invisible');
-    this.smokeScreen.classList.add('smoke-screen--visible')
-    // this.smokeScreen.innerHTML = level.victory 'Done!';
-    setTimeout(() => {
+    document.querySelector('.smoke__text').innerHTML = parseDialog(level.endNote);
+    document.querySelector('.smoke__button').innerHTML = level.endNoteButtonText || '';
+    document.querySelector('.smoke__button').addEventListener('click', () => {
       router.goTo(`/level/${this.level + 1}`);
-    }, 6000);
+    });
+    this.smokeScreen.classList.add('smoke-screen--visible');
+    document.querySelector('.story').classList.add('invisible');
   }
 
   start() {

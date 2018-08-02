@@ -4,7 +4,8 @@ body {
   justify-content: center;
   align-items: center;
   overflow: scroll;
-  background-color: #111;
+  background-color: #202;
+  font-family: sans-serif;
 }
 
 .game {
@@ -18,15 +19,44 @@ body {
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.7);
   z-index: 10;
   transition: opacity 500ms;
   opacity: 0;
   color: white;
+}
+
+.smoke__content {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  text-align: center;
+  padding: 16px;
+  box-sizing: border-box;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-color: rgba(100, 0, 100, 1);
+  width: calc(100% - 16px);
+  max-width: 320px;
+  box-shadow: 2px 2px 0px black;
+}
+
+.smoke__button {
+  pointer-events: all;
+  margin: 16px auto 0;
+  padding: 8px 16px;
+  border: none;
+  color: white;
+  background-color: #f92;
+  box-shadow: 2px 2px 0px black;
+  border-radius: 4px;
+  z-index: 100;
+  cursor: pointer;
+}
+
+.smoke__button:active {
+  box-shadow: none;
 }
 
 .smoke-screen--visible {
@@ -176,8 +206,8 @@ body {
 .story {
   margin-top: 8px;
   color: #fff;
-  padding: 8px;
-  background-color: #440;
+  padding: 16px 32px;
+  background-color: rgba(0, 0, 0, 0.5);
   font-size: 16px;
   text-align: center;
 }
@@ -205,20 +235,20 @@ body {
 .center {
   transition: all 1s;
   left: calc(50%) !important;
-  top: calc(50% - 50px) !important;
+  top: calc(20%) !important;
   transform: translate(-50%, -50%) !important;
 }
 
 .center-left {
   transition: all 1s;
   left: calc(50% - 20px) !important;
-  top: calc(50% - 50px) !important;
+  top: calc(20%) !important;
   transform: translate(-50%, -50%) !important;
 }
 
 .center-right {
   transition: all 1s;
   left: calc(50% + 20px) !important;
-  top: calc(50% - 50px) !important;
+  top: calc(20%) !important;
   transform: translate(-50%, -50%) !important;
 }
