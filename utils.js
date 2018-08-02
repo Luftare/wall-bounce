@@ -21,3 +21,12 @@ function magnitude(vec) {
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+function parseDialog(text = '') {
+  let res = text
+    .replace('HERO:', '<br><span class="speech speech--hero">HERO:</span>')
+    .replace('PRINCESS:', '<br><span class="speech speech--princess">PRINCESS:</span>')
+    .replace('ORC:', '<br><span class="speech speech--orc">ORC:</span>')
+  if(res.substr(0,4) === '<br>') res = res.substr(4);
+  return res;
+}

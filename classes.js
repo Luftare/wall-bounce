@@ -52,6 +52,7 @@ class Princess extends Obstacle {
   }
 
   onCollision() {
+    this.element.classList.add('center');
     if(game.obstacles.find(o => o instanceof Flower)) {
       game.hero.die();
     } else {
@@ -265,12 +266,7 @@ class Game {
 
   loadLevel(index) {
     const level = levels[index];
-    let parsedStory = (level.story || "PRINCESS: Help me! HERO: I'm coming!")
-      .replace('HERO:', '<br><span class="speech speech--hero">HERO:</span>')
-      .replace('PRINCESS:', '<br><span class="speech speech--princess">PRINCESS:</span>')
-      .replace('ORC:', '<br><span class="speech speech--orc">ORC:</span>')
-    if(parsedStory.substr(0,4) === '<br>') parsedStory = parsedStory.substr(4);
-    document.querySelector('.story').innerHTML = parsedStory || '<span class="hero-speech">HERO:</span>Get the princess!';
+    document.querySelector('.story').innerHTML = parseDialog(level.story);
     this.paused = false;
     this.level = index;
     field.innerHTML = '';
@@ -303,14 +299,12 @@ class Game {
 
   finishLevel() {
     this.paused = true;
-    const pricess = this.obstacles.find(obstacle => obstacle instanceof Princess);
-    pricess.element.classList.add('center-left');
-    this.hero.element.classList.remove('run');
-    this.hero.element.classList.add('center-right');
+    this.hero.element.classList.add('invisible');
     this.smokeScreen.classList.add('smoke-screen--visible')
+    // this.smokeScreen.innerHTML = level.victory 'Done!';
     setTimeout(() => {
       router.goTo(`/level/${this.level + 1}`);
-    }, 3000);
+    }, 6000);
   }
 
   start() {

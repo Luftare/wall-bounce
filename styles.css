@@ -22,6 +22,11 @@ body {
   z-index: 10;
   transition: opacity 500ms;
   opacity: 0;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .smoke-screen--visible {
@@ -159,6 +164,10 @@ body {
   animation: run 200ms infinite alternate linear;
 }
 
+.invisible {
+  opacity: 0;
+}
+
 .picked-up {
   animation: pick-up 200ms;
   opacity: 0;
@@ -193,16 +202,23 @@ body {
   color: lightgreen;
 }
 
+.center {
+  transition: all 1s;
+  left: calc(50%) !important;
+  top: calc(50% - 50px) !important;
+  transform: translate(-50%, -50%) !important;
+}
+
 .center-left {
   transition: all 1s;
   left: calc(50% - 20px) !important;
-  top: calc(50%) !important;
+  top: calc(50% - 50px) !important;
   transform: translate(-50%, -50%) !important;
 }
 
 .center-right {
   transition: all 1s;
   left: calc(50% + 20px) !important;
-  top: calc(50%) !important;
+  top: calc(50% - 50px) !important;
   transform: translate(-50%, -50%) !important;
 }
