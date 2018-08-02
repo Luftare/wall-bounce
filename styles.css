@@ -164,27 +164,6 @@ body {
   background-repeat: no-repeat;
 }
 
-.orc {
-  background-image: url('https://forum.psnprofiles.com/applications/core/interface/imageproxy/imageproxy.php?img=http://www.pixelchampions.com/images/a/m002804.png&key=5c89352545034ca07cb4e3806a157a820ce3b915aab98d2e3ac755d6480ba137');
-}
-
-.flower {
-  background-image: url('http://pixelartmaker.com/art/c3e11013976b1c8.png');
-}
-
-.tree {
-  background-image: url('https://i.imgur.com/7jWTJUW.png');
-}
-
-.wall {
-  background-image: url('https://orig00.deviantart.net/1502/f/2014/155/5/3/walltile_1_by_sarahstudiosart-d7l2g11.png');
-}
-
-.princess {
-  background-image: url('https://data.whicdn.com/images/80478767/large.png');
-  z-index: 20;
-}
-
 .dead {
   animation: death 1.8s;
   opacity: 0;

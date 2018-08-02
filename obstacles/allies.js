@@ -8,6 +8,8 @@ class Princess extends Obstacle {
     this.element.style.width = `${this.size}px`;
     this.element.style.height = `${this.size}px`;
     this.element.classList.add('princess');
+    this.element.style.backgroundImage = "url('https://data.whicdn.com/images/80478767/large.png')";
+    this.element.style.zIndex = 20;
   }
 
   onCollision() {

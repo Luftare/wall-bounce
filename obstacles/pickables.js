@@ -2,7 +2,7 @@ class Flower extends Obstacle {
   constructor(...props) {
     super(...props);
     this.nonBlocking = true;
-    this.element.classList.add('flower');
+    this.element.style.backgroundImage = "url('http://pixelartmaker.com/art/c3e11013976b1c8.png')";
   }
 
   onCollision() {
