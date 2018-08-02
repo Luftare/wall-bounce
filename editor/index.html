@@ -5,24 +5,42 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
   <body>
-    <div class="game">
-      <div id="game-field"></div>
+    <div class="tools">
       <div class="character-tools">
         <h4>Characters</h4>
-        <button id="character-tools__orc">Orc</button>
-        <button id="character-tools__tree">Tree</button>
-        <button id="character-tools__wall">Wall</button>
-        <button id="character-tools__princess">Princess</button>
-        <button id="character-tools__hero">Hero</button>
+        <div class="character-tools__options">
+          <input type="radio" id="character-tools__princess" name="character-select" hidden checked/>
+          <label for="character-tools__princess">Princess</label>
+          <input type="radio" id="character-tools__hero" name="character-select" hidden/>
+          <label for="character-tools__hero">Hero</label>
+          <input type="radio" id="character-tools__orc" name="character-select" hidden/>
+          <label for="character-tools__orc">Orc</label>
+          <input type="radio" id="character-tools__tree" name="character-select" hidden/>
+          <label for="character-tools__tree">Tree</label>
+          <input type="radio" id="character-tools__wall" name="character-select" hidden/>
+          <label for="character-tools__wall">Wall</label>
+          <input type="radio" id="character-tools__flower" name="character-select" hidden/>
+          <label for="character-tools__flower">Flower</label>
+        </div>
       </div>
       <div class="map-tools">
-        <h4>Width</h4>
-        <input type="number" id="map-tools__width" value="10" />
-        <h4>Height</h4>
-        <input type="number" id="map-tools__height" value="10" />
+        <section>
+          <h4>Width</h4>
+          <input type="number" id="map-tools__width" value="10" />
+        </section>
+        <section>
+          <h4>Height</h4>
+          <input type="number" id="map-tools__height" value="10" />
+        </section>
       </div>
-      <button id="export-json">Export</button>
-      <textarea id="json-editor"></textarea>
+      <div class="export-tools">
+        <h4>Export / Import</h4>
+        <button id="export-json">Import/Export</button>
+        <textarea id="json-editor"></textarea>
+      </div>
+    </div>
+    <div class="game">
+      <div id="game-field"></div>
     </div>
   </body>
 </html>

@@ -3,8 +3,9 @@ const PRINCESS = 'princess';
 const TREE = 'tree';
 const ORC = 'orc';
 const WALL = 'wall';
+const FLOWER = 'flower';
 
-const types = [HERO, PRINCESS, TREE, ORC, WALL];
+const types = [HERO, PRINCESS, TREE, ORC, WALL, FLOWER];
 
 const CELL_SIZE = 32;
 const field = document.getElementById('game-field');
@@ -13,14 +14,13 @@ let princess = null;
 let princessPosition = null;
 let hero = null;
 let heroPosition = null;
-let selectedObstacle = 'tree';
+let selectedObstacle = 'princess';
 let obstacles = [];
 
-/*
-
-{"mapSize":[0,0],"obstacles":[{"type":"tree","position":[2,5]},{"type":"tree","position":[4,4]},{"type":"tree","position":[6,2]},{"type":"wall","position":[2,8]},{"type":"wall","position":[3,7]},{"type":"orc","position":[1,2]},{"type":"orc","position":[3,2]},{"type":"orc","position":[9,6]},{"type":"orc","position":[9,9]}]}
-
-*/
+window.addEventListener('load', () => {
+  createObstacle(HERO, [0, 0]);
+  createObstacle(PRINCESS, [5, 5]);
+})
 
 document.getElementById('export-json').addEventListener('click', () => {
   const data = {
@@ -52,13 +52,13 @@ document.getElementById('json-editor').addEventListener('input', (e) => {
 
 document.getElementById('map-tools__width').addEventListener('input', (e) => {
   field.style.width = `${e.target.value * CELL_SIZE}px`;
-  const val = Math.floor(e.target.value / CELL_SIZE);
+  const val = parseInt(e.target.value);
   mapSize[0] = val;
 });
 
 document.getElementById('map-tools__height').addEventListener('input', (e) => {
   field.style.height = `${e.target.value * CELL_SIZE}px`;
-  const val = Math.floor(e.target.value / CELL_SIZE);
+  const val = parseInt(e.target.value);
   mapSize[1] = val;
 });
 
@@ -89,12 +89,16 @@ function createObstacle(type, position) {
     type,
     position
   };
-  if(type !== HERO && type !== PRINCESS) {
-    element.addEventListener('click', (e) => {
-      e.stopPropagation();
+  element.addEventListener('click', (e) => {
+    e.stopPropagation();
+    selectedObstacle = type;
+    document.getElementById(`character-tools__${type}`).checked = true;
+    if(type !== HERO && type !== PRINCESS) {
       obstacles = obstacles.filter(o => o !== obstacle);
       field.removeChild(element);
-    });
+    }
+  });
+  if(type !== HERO && type !== PRINCESS) {
     obstacles.push(obstacle);
   }
 

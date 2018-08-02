@@ -72,6 +72,16 @@ body {
   }
 }
 
+@keyframes pick-up {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(3, 3);
+  }
+}
+
 .hero {
   position: absolute;
   display: block;
@@ -122,13 +132,8 @@ body {
   background-image: url('https://forum.psnprofiles.com/applications/core/interface/imageproxy/imageproxy.php?img=http://www.pixelchampions.com/images/a/m002804.png&key=5c89352545034ca07cb4e3806a157a820ce3b915aab98d2e3ac755d6480ba137');
 }
 
-.dead {
-  animation: death 1.8s;
-  opacity: 0;
-}
-
-.run {
-  animation: run 200ms infinite alternate linear;
+.flower {
+  background-image: url('http://pixelartmaker.com/art/c3e11013976b1c8.png');
 }
 
 .tree {
@@ -142,6 +147,20 @@ body {
 .princess {
   background-image: url('https://data.whicdn.com/images/80478767/large.png');
   z-index: 20;
+}
+
+.dead {
+  animation: death 1.8s;
+  opacity: 0;
+}
+
+.run {
+  animation: run 200ms infinite alternate linear;
+}
+
+.picked-up {
+  animation: pick-up 200ms;
+  opacity: 0;
 }
 
 .center-left {

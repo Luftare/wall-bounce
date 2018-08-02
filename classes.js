@@ -52,7 +52,11 @@ class Princess extends Obstacle {
   }
 
   onCollision() {
-    game.finishLevel();
+    if(game.obstacles.find(o => o instanceof Flower)) {
+      game.hero.die();
+    } else {
+      game.finishLevel();
+    }
   }
 }
 
@@ -61,6 +65,19 @@ class Tree extends Obstacle {
     super(...props);
     this.bounciness = 0.3;
     this.element.classList.add('tree');
+  }
+}
+
+class Flower extends Obstacle {
+  constructor(...props) {
+    super(...props);
+    this.nonBlocking = true;
+    this.element.classList.add('flower');
+  }
+
+  onCollision() {
+    game.obstacles = game.obstacles.filter(obstacle => obstacle !== this);
+    this.element.classList.add('picked-up');
   }
 }
 
@@ -167,28 +184,31 @@ class Hero {
       const collision = getSquareCollisionSide(this, obstacle);
       if(collision) {
         obstacle.onCollision();
-        switch (collision) {
-          case 'TOP':
-            this.position[1] = obstacle.position[1] - this.size;
-            this.velocity = this.velocity.map((val, i) => i === 1? -Math.abs(val * obstacle.bounciness) : val * obstacle.bounciness);
-            break;
-          case 'RIGHT':
-            this.position[0] = obstacle.position[0] + obstacle.size;
-            this.velocity = this.velocity.map((val, i) => i === 0? Math.abs(val * obstacle.bounciness) : val * obstacle.bounciness);
-            break;
-          case 'BOTTOM':
-            this.position[1] = obstacle.position[1] + obstacle.size;
-            this.velocity = this.velocity.map((val, i) => i === 1? Math.abs(val * obstacle.bounciness) : val * obstacle.bounciness);
-            break;
-          case 'LEFT':
-            this.position[0] = obstacle.position[0] - this.size;
-            this.velocity = this.velocity.map((val, i) => i === 0? -Math.abs(val * obstacle.bounciness) : val * obstacle.bounciness);
-            break;
-          default:
-
-        }
+        if(!obstacle.nonBlocking) this.bounceFromCollision(obstacle, collision);
       }
     });
+  }
+
+  bounceFromCollision(obstacle, collision) {
+    switch (collision) {
+      case 'TOP':
+        this.position[1] = obstacle.position[1] - this.size;
+        this.velocity = this.velocity.map((val, i) => i === 1? -Math.abs(val * obstacle.bounciness) : val * obstacle.bounciness);
+        break;
+      case 'RIGHT':
+        this.position[0] = obstacle.position[0] + obstacle.size;
+        this.velocity = this.velocity.map((val, i) => i === 0? Math.abs(val * obstacle.bounciness) : val * obstacle.bounciness);
+        break;
+      case 'BOTTOM':
+        this.position[1] = obstacle.position[1] + obstacle.size;
+        this.velocity = this.velocity.map((val, i) => i === 1? Math.abs(val * obstacle.bounciness) : val * obstacle.bounciness);
+        break;
+      case 'LEFT':
+        this.position[0] = obstacle.position[0] - this.size;
+        this.velocity = this.velocity.map((val, i) => i === 0? -Math.abs(val * obstacle.bounciness) : val * obstacle.bounciness);
+        break;
+      default:
+    }
   }
 
   handleCollisions(dt) {
@@ -265,6 +285,9 @@ class Game {
             break;
           case 'wall':
             return new Wall(o.position);
+            break;
+          case 'flower':
+            return new Flower(o.position);
             break;
         }
       }),
