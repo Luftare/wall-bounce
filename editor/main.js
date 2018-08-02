@@ -90,13 +90,14 @@ function createObstacle(type, position) {
     position
   };
   if(type !== HERO && type !== PRINCESS) {
+    element.addEventListener('click', (e) => {
+      e.stopPropagation();
+      obstacles = obstacles.filter(o => o !== obstacle);
+      field.removeChild(element);
+    });
     obstacles.push(obstacle);
   }
-  element.addEventListener('click', (e) => {
-    obstacles = obstacles.filter(o => o !== obstacle);
-    e.stopPropagation();
-    field.removeChild(element);
-  });
+
   if(type === HERO) {
     if(hero) field.removeChild(hero);
     hero = element;

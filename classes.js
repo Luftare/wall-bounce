@@ -100,7 +100,6 @@ class Hero {
     this.speed = 5;
     this.maxStretch = 100;
     this.position = position.map(val => CELL_SIZE * (val + 0.15));
-    console.log(position, this.position)
     this.velocity = [0, 0];
     this.bounciness = 0.5;
 
@@ -236,7 +235,7 @@ class Game {
   constructor() {
     this.level = 0;
     this.timeFactor = 1;
-    this.paused = false;
+    this.paused = true;
     this.loop = new Loop((dt) => {
       if(this.paused) return;
       this.hero.update(dt * this.timeFactor);
@@ -246,13 +245,14 @@ class Game {
 
   loadLevel(index) {
     const level = levels[index];
+    this.paused = false;
+    this.level = index;
     field.innerHTML = '';
     this.smokeScreen = document.createElement('div');
     this.smokeScreen.classList.add('smoke-screen');
     field.appendChild(this.smokeScreen);
     field.style.width = `${level.mapSize[0] * CELL_SIZE}px`;
     field.style.height = `${level.mapSize[1] * CELL_SIZE}px`;
-    console.log(field.style.width, field.style.height)
     this.hero = new Hero(level.hero);
     this.obstacles = [
       ...level.obstacles.map(o => {
@@ -274,16 +274,14 @@ class Game {
 
   finishLevel() {
     this.paused = true;
-    this.level++;
     const pricess = this.obstacles.find(obstacle => obstacle instanceof Princess);
     pricess.element.classList.add('center-left');
     this.hero.element.classList.remove('run');
     this.hero.element.classList.add('center-right');
     this.smokeScreen.classList.add('smoke-screen--visible')
     setTimeout(() => {
-      this.paused = false;
-      this.loadLevel(this.level);
-    }, 4000);
+      router.goTo(`/level/${this.level + 1}`);
+    }, 3000);
   }
 
   start() {

@@ -5,10 +5,17 @@ const CELL_SIZE = 32;
 let game;
 let mousePosition = [0, 0];
 let mouseToHero = [10, 10];
+let currentLevel = 0;
 
 window.addEventListener('load', () => {
   game = new Game();
   game.start();
+
+  router.add('/level/:index', ({ index }) => {
+    game.loadLevel(index)
+  });
+
+  router.update();
 });
 
 window.addEventListener('mousedown', (e) => {
