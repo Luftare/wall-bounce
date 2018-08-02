@@ -67,7 +67,7 @@ body {
   position: relative;
   background-color: green;
   z-index: 0;
-  background-image: url('http://i448.photobucket.com/albums/qq205/splatgotoss/Grassy.png');
+  background-image: url("http://i448.photobucket.com/albums/qq205/splatgotoss/Grassy.png");
   background-size: 32px 32px;
 }
 
@@ -136,7 +136,6 @@ body {
 .hero {
   position: absolute;
   display: block;
-  background-image: url('http://www.nonadecimal.com/staging/SJW/paladin.png');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -152,7 +151,7 @@ body {
   left: 50%;
   top: 50%;
   transform-origin: 50% 0;
-  background-image: url('https://vignette.wikia.nocookie.net/community-sitcom/images/7/7b/Arrow_down.png/revision/latest?cb=20131015141652');
+  background-image: url("https://vignette.wikia.nocookie.net/community-sitcom/images/7/7b/Arrow_down.png/revision/latest?cb=20131015141652");
   background-size: 20px 50px;
   background-repeat: no-repeat;
   background-position: 50% 100%;

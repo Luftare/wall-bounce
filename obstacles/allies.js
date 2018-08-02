@@ -8,16 +8,16 @@ class Princess extends Obstacle {
     this.size = CELL_SIZE * 0.7;
     this.element.style.width = `${this.size}px`;
     this.element.style.height = `${this.size}px`;
-    this.element.classList.add('princess');
-    this.element.style.backgroundImage = "url('https://data.whicdn.com/images/80478767/large.png')";
+    this.element.classList.add("princess");
+    this.element.style.backgroundImage = "url('assets/images/princess.svg')";
     this.element.style.zIndex = 20;
   }
 
   onCollision() {
-    if(game.obstacles.find(o => o instanceof Flower)) {
+    if (game.obstacles.find(o => o instanceof Flower)) {
       game.hero.die();
     } else {
-      this.element.classList.add('center');
+      this.element.classList.add("center");
       game.finishLevel(this.linkIndex);
     }
   }
