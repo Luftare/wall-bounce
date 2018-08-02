@@ -6,13 +6,18 @@ class Orc extends Obstacle {
   }
 
   onCollision() {
-    game.obstacles = game.obstacles.filter(obstacle => obstacle !== this);
-    this.element.classList.add('dead');
-    game.timeFactor = 0.2;
-    game.hero.fight(this);
 
-    setTimeout(() => {
-      game.timeFactor = 1;
-    }, 200);
+    const heroWins = game.hero.fight(this);
+    if(heroWins) {
+      game.obstacles = game.obstacles.filter(obstacle => obstacle !== this);
+      this.element.classList.add('dead');
+    } else {
+      this.element.classList.add('striking');
+      setTimeout(() => {
+        this.element.classList.remove('striking');
+      }, 1000);
+    }
+
+
   }
 }

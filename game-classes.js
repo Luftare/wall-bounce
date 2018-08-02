@@ -78,7 +78,7 @@ class Game {
             return new Flower(o.position);
             break;
           case 'princess':
-            return new Princess(o.position);
+            return new Princess(o.position, o.linkIndex);
             break;
         }
       })
@@ -98,14 +98,14 @@ class Game {
     return element;
   }
 
-  finishLevel() {
+  finishLevel(nextLevelIndex = this.level + 1) {
     const level = levels[this.level];
     this.paused = true;
     this.hero.element.classList.add('invisible');
     document.querySelector('.smoke__text').innerHTML = parseDialog(level.endNote);
     document.querySelector('.smoke__button').innerHTML = level.endNoteButtonText || '';
     document.querySelector('.smoke__button').addEventListener('click', () => {
-      router.goTo(`/level/${this.level + 1}`);
+      router.goTo(`/level/${nextLevelIndex}`);
     });
     this.smokeScreen.classList.add('smoke-screen--visible');
     document.querySelector('.story').classList.add('invisible');

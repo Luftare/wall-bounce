@@ -78,20 +78,29 @@ field.addEventListener('click', (e) => {
     e.pageX - offset.left,
     e.pageY - offset.top
   ];
-  const gridPosition = position.map(val => Math.floor(val / CELL_SIZE));
-  createObstacle(selectedObstacle, gridPosition);
+  const fieldPosition = position.map(val => Math.floor(val / CELL_SIZE));
+  createObstacle(selectedObstacle, fieldPosition);
 })
 
-function createObstacle(type, position) {
+function createObstacle(type, position, linkIndex) {
   const element = document.createElement('div');
+  const levelLink = document.createElement('input');
+  levelLink.value = linkIndex || '';
+  levelLink.classList.add('obstacle__level-link');
+  levelLink.addEventListener('click', (e) => e.stopPropagation());
+  levelLink.addEventListener('input', (e) => {
+    obstacle.linkIndex = e.target.value;
+  });
   element.classList.add('obstacle');
   element.classList.add(type);
   element.style.left = `${position[0] * CELL_SIZE}px`;
   element.style.top = `${position[1] * CELL_SIZE}px`;
   element.innerHTML = type;
+  element.appendChild(levelLink);
   const obstacle = {
     type,
-    position
+    position,
+    linkIndex
   };
   element.addEventListener('click', (e) => {
     e.stopPropagation();

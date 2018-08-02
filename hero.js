@@ -1,6 +1,6 @@
 class Hero {
   constructor(position) {
-    this.maxPower = 1;
+    this.maxPower = 0;
     this.power = this.maxPower;
     this.maxFitness = 3;
     this.fitness = this.maxFitness;
@@ -40,11 +40,20 @@ class Hero {
   }
 
   fight(target) {
-    if(this.power < 0) return;
+    if(this.power < 0) return false;
     this.power--;
-    if(this.power < 0) {
+    if(this.power < 0) {//hero loses
       this.die();
-    };
+      return false;
+    } else {//hero wins
+      this.element.classList.add('striking');
+      game.timeFactor = 0.0;
+      setTimeout(() => {
+        this.element.classList.remove('striking');
+        game.timeFactor = 1;
+      }, 500);
+      return true;
+    }
   }
 
   die() {

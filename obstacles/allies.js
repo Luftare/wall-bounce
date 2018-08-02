@@ -1,6 +1,7 @@
 class Princess extends Obstacle {
-  constructor(...props) {
-    super(...props);
+  constructor(position, linkIndex) {
+    super(position);
+    this.linkIndex = linkIndex;
     this.position = this.position.map(val => val + 0.15 * CELL_SIZE);
     this.element.style.left = `${this.position[0]}px`;
     this.element.style.top = `${this.position[1]}px`;
@@ -17,7 +18,7 @@ class Princess extends Obstacle {
       game.hero.die();
     } else {
       this.element.classList.add('center');
-      game.finishLevel();
+      game.finishLevel(this.linkIndex);
     }
   }
 }
