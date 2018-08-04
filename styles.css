@@ -1,3 +1,7 @@
+:root {
+  --cell-size: 64px;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -67,8 +71,7 @@ body {
   position: relative;
   background-color: green;
   z-index: 0;
-  background-image: url("assets/images/grass-tile.svg");
-  background-size: 16px 16px;
+  background-color: green;
 }
 
 .stats {
@@ -133,26 +136,40 @@ body {
   }
 }
 
-.hero {
+.obstacle-borders {
   position: absolute;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url("assets/images/borders.svg");
+  width: var(--cell-size);
+  height: var(--cell-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero {
   display: block;
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
   transition: top 20ms, left 20ms;
   z-index: 20;
+  width: 100%;
+  height: 100%;
 }
 
 .hero__arrow {
   display: block;
   position: absolute;
-  width: 20px;
+  width: 50px;
   height: 80px;
   left: 50%;
   top: 50%;
   transform-origin: 50% 0;
-  background-image: url("https://vignette.wikia.nocookie.net/community-sitcom/images/7/7b/Arrow_down.png/revision/latest?cb=20131015141652");
-  background-size: 20px 50px;
+  background-image: url("assets/images/arrow-down.svg");
+  background-size: 40px 40px;
   background-repeat: no-repeat;
   background-position: 50% 100%;
   z-index: 9;
@@ -174,8 +191,8 @@ body {
 .obstacle {
   position: absolute;
   background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
+  /*background-position: center;
+  background-repeat: no-repeat;*/
 }
 
 .dead {

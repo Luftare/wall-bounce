@@ -4,22 +4,27 @@ class Hero {
     this.power = this.maxPower;
     this.maxFitness = 3;
     this.fitness = this.maxFitness;
-    this.size = 0.7 * CELL_SIZE;
+    this.scale = 0.7;
+    this.size = this.scale * CELL_SIZE;
     this.speed = 7;
     this.maxStretch = 100;
-    this.position = position.map(val => CELL_SIZE * (val + 0.15));
+    this.position = position.map(val => CELL_SIZE * (val + this.scale / 4));
     this.velocity = [0, 0];
     this.bounciness = 0.5;
 
+    const borders = document.createElement("div");
+    borders.classList = "obstacle-borders";
     const element = document.createElement("div");
-    element.style.width = `${this.size}px`;
-    element.style.height = `${this.size}px`;
-    element.style.left = `${this.position[0]}px`;
-    element.style.top = `${this.position[1]}px`;
+    borders.style.width = `${this.size}px`;
+    borders.style.height = `${this.size}px`;
+    borders.style.left = `${this.position[0]}px`;
+    borders.style.top = `${this.position[1]}px`;
     element.classList = "hero";
     element.style.backgroundImage = "url('assets/images/hero.svg')";
     this.element = element;
-    field.appendChild(element);
+    this.borders = borders;
+    borders.appendChild(element);
+    field.appendChild(borders);
 
     const arrow = document.createElement("div");
     arrow.classList = "hero__arrow";
@@ -180,11 +185,11 @@ class Hero {
     const [heroX, heroY] = this.position;
     const arrowAngle = (-Math.atan2(...mouseToHero) * 180) / Math.PI;
     const moving = magnitude(this.velocity) > 0;
-    element.style.left = `${heroX}px`;
-    element.style.top = `${heroY}px`;
+    this.borders.style.left = `${heroX}px`;
+    this.borders.style.top = `${heroY}px`;
     this.arrow.style.height = `${Math.max(
       0,
-      Math.min(this.maxStretch, mouseToHeroLength) / 200
+      Math.min(this.maxStretch, mouseToHeroLength) / 300
     ) * 120}px`;
     this.arrow.style.transform = `translate(-50%, 0) rotate(${arrowAngle}deg) translateY(${this
       .size * 0.7}px)`;
