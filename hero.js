@@ -1,6 +1,6 @@
 class Hero {
   constructor(position) {
-    this.maxPower = 0;
+    this.maxPower = 1;
     this.power = this.maxPower;
     this.maxFitness = 3;
     this.fitness = this.maxFitness;
@@ -13,13 +13,13 @@ class Hero {
     this.bounciness = 0.5;
 
     const borders = document.createElement("div");
-    borders.classList = "obstacle-borders";
+    borders.classList = "obstacle-borders borders--yellow";
     const element = document.createElement("div");
     borders.style.width = `${this.size}px`;
     borders.style.height = `${this.size}px`;
     borders.style.left = `${this.position[0]}px`;
     borders.style.top = `${this.position[1]}px`;
-    element.classList = "hero";
+    element.classList.add("hero");
     element.style.backgroundImage = "url('assets/images/hero.svg')";
     this.element = element;
     this.borders = borders;

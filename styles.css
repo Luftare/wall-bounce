@@ -136,12 +136,20 @@ body {
   }
 }
 
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .obstacle-borders {
   position: absolute;
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  background-image: url("assets/images/borders.svg");
   width: var(--cell-size);
   height: var(--cell-size);
   display: flex;
@@ -149,12 +157,24 @@ body {
   justify-content: center;
 }
 
-.borders__corner {
-  fill: red;
+.borders--yellow {
+  background-image: url("assets/images/yellow-borders.svg");
+}
+
+.borders--white {
+  background-image: url("assets/images/white-borders.svg");
+}
+
+.borders--red {
+  background-image: url("assets/images/red-borders.svg");
+}
+
+.borders--blue {
+  background-image: url("assets/images/blue-borders.svg");
 }
 
 .center.obstacle-borders {
-  background: none;
+  background-image: none !important;
 }
 
 .hero {
@@ -221,6 +241,10 @@ body {
 
 .invisible {
   opacity: 0;
+}
+
+.fade-in {
+  animation: fade-in 500ms;
 }
 
 .picked-up {

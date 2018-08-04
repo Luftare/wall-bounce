@@ -8,6 +8,7 @@ class Princess extends Obstacle {
     this.element.style.backgroundImage = "url('assets/images/princess.svg')";
     this.element.style.zIndex = 20;
     this.borders.style.zIndex = 20;
+    this.borders.classList.add("borders--blue");
   }
 
   onCollision() {
