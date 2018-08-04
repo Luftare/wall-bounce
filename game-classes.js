@@ -21,19 +21,28 @@ class Loop {
 }
 
 class Obstacle {
-  constructor(position) {
-    this.position = position.map(val => CELL_SIZE * val);
+  constructor(position, scale = 1) {
+    this.scale = scale;
     this.size = CELL_SIZE;
     this.bounciness = 0.5;
+    this.position = position.map(
+      val => CELL_SIZE * (val + (0.5 - scale * 0.5))
+    );
+    this.scale = scale;
 
     const element = document.createElement("div");
-    element.style.width = `${this.size}px`;
-    element.style.height = `${this.size}px`;
-    element.style.left = `${this.position[0]}px`;
-    element.style.top = `${this.position[1]}px`;
     element.classList = "obstacle";
     this.element = element;
-    field.appendChild(element);
+
+    const borders = document.createElement("div");
+    borders.classList = "obstacle-borders obstacle-borders--white";
+    borders.style.left = `${this.position[0]}px`;
+    borders.style.top = `${this.position[1]}px`;
+    borders.style.width = `${this.size * this.scale}px`;
+    borders.style.height = `${this.size * this.scale}px`;
+    this.borders = borders;
+    borders.appendChild(this.element);
+    field.appendChild(borders);
   }
 
   onCollision() {}

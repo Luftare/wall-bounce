@@ -3,12 +3,12 @@ class Flower extends Obstacle {
     super(...props);
     this.nonBlocking = true;
     this.element.style.backgroundImage = "url('assets/images/flower.svg')";
-    this.element.style.backgroundColor = "rgba(100, 100, 0, 0.7)";
+    // this.element.style.backgroundColor = "rgba(100, 100, 0, 0.7)";
   }
 
   onCollision() {
     game.obstacles = game.obstacles.filter(obstacle => obstacle !== this);
-    this.element.classList.add("picked-up");
+    this.borders.classList.add("picked-up");
     game.hero.element.classList.add("picking-up");
     game.timeFactor = 0;
     setTimeout(() => {
