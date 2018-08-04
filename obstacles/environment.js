@@ -13,3 +13,32 @@ class Wall extends Obstacle {
     this.element.style.backgroundImage = "url('assets/images/wall.svg')";
   }
 }
+
+class Wind extends Obstacle {
+  constructor(position, direction) {
+    super(position);
+    this.direction = direction;
+    this.force = 1000;
+    this.nonBlocking = true;
+    this.element.style.backgroundImage = "url('assets/images/wind.svg')";
+    this.element.classList.add(`wind--${direction.toLowerCase()}`);
+  }
+
+  onCollision(dt) {
+    if(magnitude(game.hero.velocity) < 10) return;
+    switch (this.direction) {
+      case "UP":
+        game.hero.velocity[1] -= this.force * dt;
+        break;
+      case "DOWN":
+        game.hero.velocity[1] += this.force * dt;
+        break;
+      case "LEFT":
+        game.hero.velocity[0] -= this.force * dt;
+        break;
+      case "RIGHT":
+        game.hero.velocity[0] += this.force * dt;
+        break;
+    }
+  }
+}

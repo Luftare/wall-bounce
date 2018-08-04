@@ -1,6 +1,6 @@
 class Hero {
   constructor(position) {
-    this.maxPower = 1;
+    this.maxPower = 0;
     this.power = this.maxPower;
     this.maxFitness = 3;
     this.fitness = this.maxFitness;
@@ -34,9 +34,9 @@ class Hero {
 
   update(dt) {
     this.move(dt);
-    this.handleCollisions();
-    this.handleFitness();
-    this.render();
+    this.handleCollisions(dt);
+    this.handleFitness(dt);
+    this.render(dt);
   }
 
   handleFitness() {
@@ -77,9 +77,9 @@ class Hero {
     const bounds = [field.offsetWidth, field.offsetHeight];
     this.position.forEach((_, i) => {
       if (this.position[i] < 0) {
-        if (i === 0 && !isNaN(game.edgeLinks[3]))
+        if (i === 0 && game.edgeLinks[3])
           router.goTo(`/levels/${game.edgeLinks[3]}`); //left edge
-        if (i === 1 && !isNaN(game.edgeLinks[0]))
+        if (i === 1 && game.edgeLinks[0])
           router.goTo(`/levels/${game.edgeLinks[0]}`); //top edge
         this.position[i] = 0;
         this.velocity = this.velocity.map(
@@ -88,9 +88,9 @@ class Hero {
         );
       }
       if (this.position[i] + this.size > bounds[i]) {
-        if (i === 0 && !isNaN(game.edgeLinks[1]))
+        if (i === 0 && game.edgeLinks[1])
           router.goTo(`/levels/${game.edgeLinks[1]}`); //right edge
-        if (i === 1 && !isNaN(game.edgeLinks[2]))
+        if (i === 1 && game.edgeLinks[2])
           router.goTo(`/levels/${game.edgeLinks[2]}`); //bottom edge
         this.position[i] = bounds[i] - this.size;
         this.velocity = this.velocity.map(
@@ -105,7 +105,7 @@ class Hero {
     game.obstacles.forEach(obstacle => {
       const collision = getSquareCollisionSide(this, obstacle);
       if (collision) {
-        obstacle.onCollision();
+        obstacle.onCollision(dt);
         if (!obstacle.nonBlocking)
           this.bounceFromCollision(obstacle, collision);
       }

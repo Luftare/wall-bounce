@@ -4,8 +4,9 @@ const TREE = 'tree';
 const ORC = 'orc';
 const WALL = 'wall';
 const FLOWER = 'flower';
+const WIND = 'wind';
 
-const types = [HERO, PRINCESS, TREE, ORC, WALL, FLOWER];
+const types = [HERO, PRINCESS, TREE, ORC, WALL, FLOWER, WIND];
 
 const CELL_SIZE = 32;
 const field = document.getElementById('game-field');
@@ -57,7 +58,7 @@ document.getElementById('json-editor').addEventListener('input', (e) => {
     document.getElementById('end-note-button-text-editor').value = data.endNoteButtonText || '';
     field.style.width = `${mapSize[0] * CELL_SIZE}px`;
     field.style.height = `${mapSize[1] * CELL_SIZE}px`;
-    data.obstacles.forEach(obstacle => createObstacle(obstacle.type, obstacle.position));
+    data.obstacles.forEach(obstacle => createObstacle(obstacle.type, obstacle.position, obstacle));
     createObstacle(HERO, data.hero);
   }
   catch(err) {
@@ -92,44 +93,3 @@ field.addEventListener('click', (e) => {
   const fieldPosition = position.map(val => Math.floor(val / CELL_SIZE));
   createObstacle(selectedObstacle, fieldPosition);
 })
-
-function createObstacle(type, position, linkIndex) {
-  const element = document.createElement('div');
-  const levelLink = document.createElement('input');
-  levelLink.value = linkIndex || '';
-  levelLink.classList.add('obstacle__level-link');
-  levelLink.addEventListener('click', (e) => e.stopPropagation());
-  levelLink.addEventListener('input', (e) => {
-    obstacle.linkIndex = e.target.value;
-  });
-  element.classList.add('obstacle');
-  element.classList.add(type);
-  element.style.left = `${position[0] * CELL_SIZE}px`;
-  element.style.top = `${position[1] * CELL_SIZE}px`;
-  element.innerHTML = type;
-  element.appendChild(levelLink);
-  const obstacle = {
-    type,
-    position,
-    linkIndex
-  };
-  element.addEventListener('click', (e) => {
-    e.stopPropagation();
-    selectedObstacle = type;
-    document.getElementById(`character-tools__${type}`).checked = true;
-    if(type !== HERO) {
-      obstacles = obstacles.filter(o => o !== obstacle);
-      field.removeChild(element);
-    }
-  });
-  if(type !== HERO) {
-    obstacles.push(obstacle);
-  }
-
-  if(type === HERO) {
-    if(hero) field.removeChild(hero);
-    hero = element;
-    heroPosition = position;
-  }
-  field.appendChild(element);
-}

@@ -23,12 +23,11 @@ class Loop {
 class Obstacle {
   constructor(position, scale = 1) {
     this.scale = scale;
-    this.size = CELL_SIZE;
+    this.size = scale * CELL_SIZE;
     this.bounciness = 0.5;
     this.position = position.map(
-      val => CELL_SIZE * (val + (0.5 - scale * 0.5))
+      val => CELL_SIZE * (val + (1 - scale) / 2)
     );
-    this.scale = scale;
 
     const element = document.createElement("div");
     element.classList = "obstacle";
@@ -38,8 +37,8 @@ class Obstacle {
     borders.classList = "obstacle-borders obstacle-borders--white";
     borders.style.left = `${this.position[0]}px`;
     borders.style.top = `${this.position[1]}px`;
-    borders.style.width = `${this.size * this.scale}px`;
-    borders.style.height = `${this.size * this.scale}px`;
+    borders.style.width = `${this.size}px`;
+    borders.style.height = `${this.size}px`;
     this.borders = borders;
     borders.appendChild(this.element);
     field.appendChild(borders);
@@ -87,6 +86,9 @@ class Game {
             break;
           case "flower":
             return new Flower(o.position);
+            break;
+          case "wind":
+            return new Wind(o.position, o.direction);
             break;
           case "princess":
             return new Princess(o.position, o.linkIndex);

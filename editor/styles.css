@@ -1,7 +1,7 @@
 body {
   margin: 0;
   display: grid;
-  grid-template-columns: 300px auto;
+  grid-template-columns: 400px auto;
   grid-template-rows: 100vh;
   background-color: #eee;
 }
@@ -137,4 +137,14 @@ input:checked + label {
 
 .hero {
   background-color: lightblue;
+}
+
+.wind {
+  background-color: white;
+}
+
+.wind-direction {
+  width: 100%;
+  font-size: 8px;
+  text-align: center;
 }

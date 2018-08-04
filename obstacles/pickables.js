@@ -1,6 +1,6 @@
 class Flower extends Obstacle {
-  constructor(...props) {
-    super(...props, 0.7);
+  constructor(position) {
+    super(position, 0.7);
     this.nonBlocking = true;
     this.element.style.backgroundImage = "url('assets/images/flower.svg')";
     this.borders.classList.add("borders--white");

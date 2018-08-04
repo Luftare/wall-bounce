@@ -69,9 +69,11 @@ body {
 
 #game-field {
   position: relative;
-  background-color: green;
   z-index: 0;
   background-color: green;
+  overflow: hidden;
+  /*background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Color_icon_green.svg/2000px-Color_icon_green.svg.png');
+  background-size: 64px 64px;*/
 }
 
 .stats {
@@ -220,6 +222,79 @@ body {
   background-size: contain;
   width: 100%;
   height: 100%;
+}
+
+@keyframes wind-right {
+  0% {
+    opacity: 0;
+    transform: translate(-25px, 0) rotate(-180deg) scale(0.7);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform:  translate(25px, 0) rotate(180deg) scale(0.7);
+  }
+}
+
+@keyframes wind-left {
+  0% {
+    opacity: 0;
+    transform: translate(25px, 0) rotate(-180deg) scale(0.7);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform:  translate(-25px, 0) rotate(180deg) scale(0.7);
+  }
+}
+
+@keyframes wind-up {
+  0% {
+    opacity: 0;
+    transform: translate(0, -25px) rotate(-180deg) scale(0.7);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform:  translate(0, 25px) rotate(180deg) scale(0.7);
+  }
+}
+
+@keyframes wind-down {
+  0% {
+    opacity: 0;
+    transform: translate(0, 25px) rotate(-180deg) scale(0.7);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform:  translate(0, -25px) rotate(180deg) scale(0.7);
+  }
+}
+
+.wind--right {
+  animation: wind-right 1.5s infinite linear;
+}
+.wind--left {
+  animation: wind-left 1.5s infinite linear;
+}
+.wind--up {
+  animation: wind-up 1.5s infinite linear;
+}
+.wind--down {
+  animation: wind-down 1.5s infinite linear;
 }
 
 .dead {
