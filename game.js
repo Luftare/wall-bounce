@@ -19,14 +19,22 @@ window.addEventListener("load", () => {
 });
 
 window.addEventListener("mousedown", e => {
+  const scrollOffset = [
+    window.pageXOffset || document.documentElement.scrollLeft,
+    window.pageYOffset || document.documentElement.scrollTop
+  ];
   const offset = field.getBoundingClientRect();
-  const position = [e.pageX - offset.left, e.pageY - offset.top];
+  const position = [e.pageX - offset.left - scrollOffset[0], e.pageY - offset.top - scrollOffset[1]];
   mousePosition = position;
 });
 
 window.addEventListener("mousemove", e => {
+  const scrollOffset = [
+    window.pageXOffset || document.documentElement.scrollLeft,
+    window.pageYOffset || document.documentElement.scrollTop
+  ];
   const offset = field.getBoundingClientRect();
-  const position = [e.pageX - offset.left, e.pageY - offset.top];
+  const position = [e.pageX - offset.left - scrollOffset[0], e.pageY - offset.top - scrollOffset[1]];
   mousePosition = position;
 });
 
