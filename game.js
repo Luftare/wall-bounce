@@ -52,3 +52,28 @@ window.addEventListener("mouseup", e => {
     game.hero.charge(velocity);
   }
 });
+
+window.addEventListener("touchstart", e => {
+  const scrollOffset = [
+    window.pageXOffset || document.documentElement.scrollLeft,
+    window.pageYOffset || document.documentElement.scrollTop
+  ];
+  const offset = field.getBoundingClientRect();
+  const position = [e.changedTouches[0].pageX - offset.left - scrollOffset[0], e.changedTouches[0].pageY - offset.top - scrollOffset[1]];
+  mousePosition = position;
+});
+
+window.addEventListener("touchend", e => {
+  if (magnitude(game.hero.velocity) === 0) {
+    const mouseToHeroLength = magnitude(mouseToHero);
+    const velocity = mouseToHero
+      .map(val => val / mouseToHeroLength)
+      .map(
+        val =>
+          game.hero.speed *
+          val *
+          Math.min(game.hero.maxStretch, mouseToHeroLength)
+      );
+    game.hero.charge(velocity);
+  }
+});
