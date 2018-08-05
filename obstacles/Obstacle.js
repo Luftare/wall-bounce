@@ -22,5 +22,10 @@ class Obstacle {
     field.appendChild(borders);
   }
 
+  openDialog() {
+    this.borders.classList.add("center");
+    game.finishLevel(this.linkIndex);
+  }
+
   onCollision() {}
 }

@@ -5,6 +5,7 @@ const obstacleConstructors = {
   [WIND]: Wind,
   [FLOWER]: Flower,
   [TREE]: Tree,
+  [WIZARD]: Wizard
 };
 
 class Loop {
@@ -49,6 +50,7 @@ class Game {
     field.innerHTML = "";
     this.paused = false;
     this.level = index;
+    this.storyScript = level.storyScript;
     this.smokeScreen = this.createSmokeScreen();
     document.querySelector(".story").innerHTML = parseDialog(level.story);
     document.querySelector(".story").classList.remove("invisible");

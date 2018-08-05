@@ -13,6 +13,7 @@ window.addEventListener('load', () => {
 document.getElementById('export-json').addEventListener('click', () => {
   const story = document.getElementById('story-editor').value;
   const endNote = document.getElementById('end-note-editor').value;
+  const storyScript = document.getElementById('story-script').value;
   const endNoteButtonText = document.getElementById('end-note-button-text-editor').value;
   const edgeLinks = [
     parseInt(document.getElementById('map-tools__link-top').value),
@@ -27,23 +28,26 @@ document.getElementById('export-json').addEventListener('click', () => {
     story,
     endNote,
     endNoteButtonText,
-    edgeLinks
+    edgeLinks,
+    storyScript
   };
   const json = JSON.stringify(data);
   document.getElementById('json-editor').value = json;
 })
 
 document.getElementById('json-editor').addEventListener('input', (e) => {
-  try {
     obstacles = [];
     const json = e.target.value;
     const data = JSON.parse(json);
     mapSize = data.mapSize;
-    document.getElementById('map-tools__link-top').value = isNaN(data.edgeLinks[0]) ? '' : data.edgeLinks[0];
-    document.getElementById('map-tools__link-right').value = isNaN(data.edgeLinks[1]) ? '' : data.edgeLinks[1];
-    document.getElementById('map-tools__link-bottom').value = isNaN(data.edgeLinks[2]) ? '' : data.edgeLinks[2];
-    document.getElementById('map-tools__link-left').value = isNaN(data.edgeLinks[3]) ? '' : data.edgeLinks[3];
+    if(data.edgeLinks && data.edgeLinks.find(e => !!e)) {
+      document.getElementById('map-tools__link-top').value = data.edgeLinks[0] || '';
+      document.getElementById('map-tools__link-right').value = data.edgeLinks[1] || '';
+      document.getElementById('map-tools__link-bottom').value = data.edgeLinks[2] || '';
+      document.getElementById('map-tools__link-left').value = data.edgeLinks[3] || '';
+    }
     document.getElementById('story-editor').value = data.story || '';
+    document.getElementById('story-script').value = data.storyScript || '';
     document.getElementById('end-note-editor').value = data.endNote || '';
     document.getElementById('end-note-button-text-editor').value = data.endNoteButtonText || '';
     document.getElementById('map-tools__width').value = data.mapSize[0];
@@ -52,10 +56,6 @@ document.getElementById('json-editor').addEventListener('input', (e) => {
     field.style.height = `${mapSize[1] * CELL_SIZE}px`;
     data.obstacles.forEach(obstacle => createObstacle(obstacle.type, obstacle.position, obstacle));
     createObstacle(HERO, data.hero);
-  }
-  catch(err) {
-
-  }
 });
 
 document.getElementById('map-tools__width').addEventListener('input', (e) => {
