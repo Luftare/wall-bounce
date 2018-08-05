@@ -346,6 +346,7 @@ body {
 
 .speech {
   margin-right: 2px;
+  font-weight: bold;
 }
 
 .speech--hero {
@@ -358,6 +359,10 @@ body {
 
 .speech--orc {
   color: lightgreen;
+}
+
+.speech--wizard {
+  color: grey;
 }
 
 .center {

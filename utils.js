@@ -27,6 +27,7 @@ function parseDialog(text = '') {
     .split('HERO:').join('<br><span class="speech speech--hero">HERO:</span>')
     .split('PRINCESS:').join('<br><span class="speech speech--princess">PRINCESS:</span>')
     .split('ORC:').join('<br><span class="speech speech--orc">ORC:</span>')
+    .split('WIZARD:').join('<br><span class="speech speech--wizard">WIZARD:</span>')
   if(res.substr(0,4) === '<br>') res = res.substr(4);
   return res;
 }

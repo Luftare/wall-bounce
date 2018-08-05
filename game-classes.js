@@ -45,6 +45,10 @@ class Game {
     this.loadLevel(this.level);
   }
 
+  find(type) {
+    return this.obstacles.find(o => o instanceof type);
+  }
+
   loadLevel(index) {
     const level = levels[index];
     this.globalInventory = this.globalInventory.filter((item, i, arr) => arr.indexOf(item) === i);//remove duplicates

@@ -64,6 +64,15 @@ class Hero {
     }
   }
 
+  openDialog() {
+    this.borders.classList.add("center");
+    game.finishLevel(this.linkIndex);
+  }
+
+  is(type) {
+    return type === Hero;
+  }
+
   die() {
     if (this.element.classList.contains("dead")) return;
     this.velocity = [0, 0];

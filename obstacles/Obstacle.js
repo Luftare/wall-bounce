@@ -22,6 +22,10 @@ class Obstacle {
     field.appendChild(borders);
   }
 
+  is(type) {
+    return this instanceof type;
+  }
+
   openDialog() {
     this.borders.classList.add("center");
     game.finishLevel(this.linkIndex);
