@@ -29,7 +29,7 @@ document.getElementById('export-json').addEventListener('click', () => {
     endNote,
     endNoteButtonText,
     edgeLinks,
-    storyScript
+    storyScript,
   };
   const json = JSON.stringify(data);
   document.getElementById('json-editor').value = json;

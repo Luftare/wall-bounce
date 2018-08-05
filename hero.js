@@ -78,9 +78,9 @@ class Hero {
     this.position.forEach((_, i) => {
       if (this.position[i] < 0) {
         if (i === 0 && game.edgeLinks[3])
-          router.goTo(`/levels/${game.edgeLinks[3]}`); //left edge
+          eval(game.storyScript);
         if (i === 1 && game.edgeLinks[0])
-          router.goTo(`/levels/${game.edgeLinks[0]}`); //top edge
+          eval(game.storyScript);
         this.position[i] = 0;
         this.velocity = this.velocity.map(
           (val, j) =>
@@ -89,9 +89,9 @@ class Hero {
       }
       if (this.position[i] + this.size > bounds[i]) {
         if (i === 0 && game.edgeLinks[1])
-          router.goTo(`/levels/${game.edgeLinks[1]}`); //right edge
+          eval(game.storyScript);
         if (i === 1 && game.edgeLinks[2])
-          router.goTo(`/levels/${game.edgeLinks[2]}`); //bottom edge
+          eval(game.storyScript);
         this.position[i] = bounds[i] - this.size;
         this.velocity = this.velocity.map(
           (val, j) =>

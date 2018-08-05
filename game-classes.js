@@ -33,6 +33,7 @@ class Loop {
 
 class Game {
   constructor() {
+    this.globalInventory = [];
     this.edgeLinks = [];
     this.level = 0;
     this.timeFactor = 1;
@@ -46,6 +47,7 @@ class Game {
 
   loadLevel(index) {
     const level = levels[index];
+    this.globalInventory = this.globalInventory.filter((item, i, arr) => arr.indexOf(item) === i);//remove duplicates
     this.edgeLinks = level.edgeLinks || [];
     field.innerHTML = "";
     this.paused = false;
@@ -57,6 +59,7 @@ class Game {
     field.style.width = `${level.mapSize[0] * CELL_SIZE}px`;
     field.style.height = `${level.mapSize[1] * CELL_SIZE}px`;
     this.hero = new Hero(level.hero);
+    this.globalInventory.forEach(item => item.equip(this.hero));
     this.obstacles = level.obstacles.map(o => new obstacleConstructors[o.type](o));
   }
 
