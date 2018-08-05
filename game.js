@@ -61,10 +61,16 @@ window.addEventListener("touchstart", e => {
   const offset = field.getBoundingClientRect();
   const position = [e.changedTouches[0].pageX - offset.left - scrollOffset[0], e.changedTouches[0].pageY - offset.top - scrollOffset[1]];
   mousePosition = position;
+  mouseToHero = game.hero.position.map(
+    (val, i) => val - mousePosition[i] + game.hero.size / 2
+  );
 });
 
 window.addEventListener("touchend", e => {
   if (magnitude(game.hero.velocity) === 0) {
+    mouseToHero = game.hero.position.map(
+      (val, i) => val - mousePosition[i] + game.hero.size / 2
+    );
     const mouseToHeroLength = magnitude(mouseToHero);
     const velocity = mouseToHero
       .map(val => val / mouseToHeroLength)
