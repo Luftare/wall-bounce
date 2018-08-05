@@ -1,10 +1,10 @@
 const obstacleConstructors = {
-  "princess": Princess,
-  "orc": Orc,
-  "wall": Wall,
-  "wind": Wind,
-  "flower": Flower,
-  "tree": Tree,
+  [PRINCESS]: Princess,
+  [ORC]: Orc,
+  [WALL]: Wall,
+  [WIND]: Wind,
+  [FLOWER]: Flower,
+  [TREE]: Tree,
 };
 
 class Loop {

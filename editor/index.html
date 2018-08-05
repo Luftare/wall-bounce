@@ -1,6 +1,7 @@
 <html>
   <head>
     <title>Wall Bounce - Editor</title>
+    <script src="../allObstacles.js" defer></script>
     <script src="typeCreators.js" defer></script>
     <script src="main.js" defer></script>
     <link rel="stylesheet" type="text/css" href="styles.css">
@@ -9,22 +10,7 @@
     <div class="tools">
       <div class="character-tools">
         <h4>Characters</h4>
-        <div class="character-tools__options">
-          <input type="radio" id="character-tools__princess" name="character-select" hidden checked/>
-          <label for="character-tools__princess">Princess</label>
-          <input type="radio" id="character-tools__hero" name="character-select" hidden/>
-          <label for="character-tools__hero">Hero</label>
-          <input type="radio" id="character-tools__orc" name="character-select" hidden/>
-          <label for="character-tools__orc">Orc</label>
-          <input type="radio" id="character-tools__tree" name="character-select" hidden/>
-          <label for="character-tools__tree">Tree</label>
-          <input type="radio" id="character-tools__wall" name="character-select" hidden/>
-          <label for="character-tools__wall">Wall</label>
-          <input type="radio" id="character-tools__flower" name="character-select" hidden/>
-          <label for="character-tools__flower">Flower</label>
-          <input type="radio" id="character-tools__wind" name="character-select" hidden/>
-          <label for="character-tools__wind">Wind</label>
-        </div>
+        <div class="character-tools__options"></div>
       </div>
       <div class="map-tools">
         <section>

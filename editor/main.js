@@ -1,19 +1,9 @@
-const HERO = 'hero';
-const PRINCESS = 'princess';
-const TREE = 'tree';
-const ORC = 'orc';
-const WALL = 'wall';
-const FLOWER = 'flower';
-const WIND = 'wind';
-
-const types = [HERO, PRINCESS, TREE, ORC, WALL, FLOWER, WIND];
-
 const CELL_SIZE = 32;
 const field = document.getElementById('game-field');
 let mapSize = [10, 10];
 let hero = null;
 let heroPosition = null;
-let selectedObstacle = 'princess';
+let selectedObstacle = allObstacles[0];
 let obstacles = [];
 
 window.addEventListener('load', () => {
@@ -78,10 +68,22 @@ document.getElementById('map-tools__height').addEventListener('input', (e) => {
   mapSize[1] = val;
 });
 
-types.forEach(type => {
-  document.getElementById(`character-tools__${type}`).addEventListener('click', () => {
+allObstacles.forEach(type => {
+  const container = document.querySelector('.character-tools__options');
+  const input = document.createElement('input');
+  const label = document.createElement('label');
+  input.type = 'radio';
+  input.id = `character-tools__${type}`;
+  input.name = 'character-select';
+  input.hidden = true;
+  input.checked = type === selectedObstacle;
+  input.addEventListener('click', () => {
     selectedObstacle = type;
   });
+  label.setAttribute('for', `character-tools__${type}`);
+  label.innerHTML = type;
+  container.appendChild(input);
+  container.appendChild(label);
 })
 
 field.addEventListener('click', (e) => {

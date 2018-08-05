@@ -4,7 +4,7 @@ function createObstacle(type, position, conf = {}) {
       createWind(position, conf.direction);
       break;
     default:
-      createGenericObstacle(type, position);
+      createGenericObstacle(type, position, conf.linkIndex);
   }
 }
 
