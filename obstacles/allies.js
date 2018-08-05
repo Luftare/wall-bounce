@@ -1,5 +1,5 @@
 class Princess extends Obstacle {
-  constructor(position, linkIndex) {
+  constructor({position, linkIndex}) {
     super(position, 0.7);
     this.linkIndex = linkIndex;
     this.size = CELL_SIZE * this.scale;

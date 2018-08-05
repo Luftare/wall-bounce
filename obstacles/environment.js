@@ -1,6 +1,6 @@
 class Tree extends Obstacle {
-  constructor(...props) {
-    super(...props);
+  constructor({position}) {
+    super(position);
     this.bounciness = 0.3;
     this.element.style.backgroundColor = "rgba(100, 105, 0, 1)";
     this.element.style.backgroundImage = "url('assets/images/tree.svg')";
@@ -8,14 +8,14 @@ class Tree extends Obstacle {
 }
 
 class Wall extends Obstacle {
-  constructor(...props) {
-    super(...props);
+  constructor({position}) {
+    super(position);
     this.element.style.backgroundImage = "url('assets/images/wall.svg')";
   }
 }
 
 class Wind extends Obstacle {
-  constructor(position, direction) {
+  constructor({position, direction}) {
     super(position);
     this.direction = direction;
     this.force = 1000;

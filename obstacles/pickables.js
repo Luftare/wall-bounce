@@ -1,5 +1,5 @@
 class Flower extends Obstacle {
-  constructor(position) {
+  constructor({position}) {
     super(position, 0.7);
     this.nonBlocking = true;
     this.element.style.backgroundImage = "url('assets/images/flower.svg')";

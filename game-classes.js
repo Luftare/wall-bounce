@@ -76,22 +76,22 @@ class Game {
       ...level.obstacles.map(o => {
         switch (o.type) {
           case "orc":
-            return new Orc(o.position);
+            return new Orc(o);
             break;
           case "tree":
-            return new Tree(o.position);
+            return new Tree(o);
             break;
           case "wall":
-            return new Wall(o.position);
+            return new Wall(o);
             break;
           case "flower":
-            return new Flower(o.position);
+            return new Flower(o);
             break;
           case "wind":
-            return new Wind(o.position, o.direction);
+            return new Wind(o);
             break;
           case "princess":
-            return new Princess(o.position, o.linkIndex);
+            return new Princess(o);
             break;
         }
       })
