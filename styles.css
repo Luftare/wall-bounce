@@ -284,6 +284,10 @@ body {
   }
 }
 
+.wind {
+  opacity: 0;
+}
+
 .wind--right {
   animation: wind-right 1.5s infinite linear;
 }

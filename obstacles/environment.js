@@ -21,7 +21,10 @@ class Wind extends Obstacle {
     this.force = 1000;
     this.nonBlocking = true;
     this.element.style.backgroundImage = "url('assets/images/wind.svg')";
+    this.element.classList.add('wind');
     this.element.classList.add(`wind--${direction.toLowerCase()}`);
+    this.element.style.animationDelay = `${Math.random() * 700}ms`;
+    this.borders.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
   }
 
   onCollision(dt) {
