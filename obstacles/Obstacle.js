@@ -26,9 +26,9 @@ class Obstacle {
     return this instanceof type;
   }
 
-  openDialog() {
+  openEndDialog(nextId) {
     this.borders.classList.add("center");
-    game.finishLevel(this.linkIndex);
+    game.finishLevel(nextId);
   }
 
   onCollision() {}

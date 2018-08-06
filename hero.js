@@ -64,9 +64,9 @@ class Hero {
     }
   }
 
-  openDialog() {
+  openEndDialog(nextId) {
     this.borders.classList.add("center");
-    game.finishLevel(this.linkIndex);
+    game.finishLevel(nextId);
   }
 
   is(type) {
@@ -78,7 +78,7 @@ class Hero {
     this.velocity = [0, 0];
     this.element.classList.add("dead");
     setTimeout(() => {
-      game.loadLevel(game.level);
+      game.loadLevel(game.levelId);
     }, 2500);
   }
 

@@ -16,7 +16,7 @@ class Princess extends Obstacle {
     // if (game.obstacles.find(o => o instanceof Flower)) {
     //   game.hero.die();
     // } else {
-    //   this.openDialog();
+    //   this.openEndDialog();
     // }
   }
 }

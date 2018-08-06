@@ -35,7 +35,7 @@ class Game {
   constructor() {
     this.globalInventory = [];
     this.edgeLinks = [];
-    this.level = 0;
+    this.levelId = 0;
     this.levelData = {};
     this.timeFactor = 1;
     this.paused = true;
@@ -43,23 +43,23 @@ class Game {
       if (this.paused) return;
       this.hero.update(dt * this.timeFactor);
     });
-    this.loadLevel(this.level);
+    this.loadLevel(this.levelId);
   }
 
   find(type) {
     return this.obstacles.find(o => o instanceof type);
   }
 
-  loadLevel(index) {
-    fetch(`levels/${index}.json`)
+  loadLevel(id = this.levelId) {
+    fetch(`levels/${id}.json`)
       .then(data => data.json())
       .then(level => {
+        this.levelId = id;
         this.levelData = level;
-        this.globalInventory = this.globalInventory.filter((item, i, arr) => arr.indexOf(item) === i);//remove duplicates
+        this.globalInventory = this.globalInventory.filter((item, i, arr) => arr.indexOf(item) === i);//remove duplicate items
         this.edgeLinks = level.edgeLinks || [];
         field.innerHTML = "";
         this.paused = false;
-        this.level = index;
         this.storyScript = level.storyScript;
         this.smokeScreen = this.createSmokeScreen();
         document.querySelector(".story").innerHTML = parseDialog(level.story);
@@ -85,7 +85,7 @@ class Game {
     return element;
   }
 
-  finishLevel(nextLevelIndex = this.level + 1) {
+  finishLevel(nextLevelId = this.levelId + 1) {
     const level = this.levelData;
     this.paused = true;
     this.hero.element.classList.add("invisible");
@@ -95,7 +95,7 @@ class Game {
     document.querySelector(".smoke__button").innerHTML =
       level.endNoteButtonText || "";
     document.querySelector(".smoke__button").addEventListener("click", () => {
-      router.goTo(`/levels/${nextLevelIndex}`);
+      router.goTo(`/levels/${nextLevelId}`);
     });
     this.smokeScreen.classList.add("smoke-screen--visible");
     document.querySelector(".story").classList.add("invisible");

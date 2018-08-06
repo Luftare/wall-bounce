@@ -1,5 +1,4 @@
 window.addEventListener('hashchange', () => router.update());
-window.addEventListener('load', () => router.update());
 
 const router = {
   routes: [],
