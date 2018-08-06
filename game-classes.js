@@ -50,21 +50,24 @@ class Game {
   }
 
   loadLevel(index) {
-    const level = levels[index];
-    this.globalInventory = this.globalInventory.filter((item, i, arr) => arr.indexOf(item) === i);//remove duplicates
-    this.edgeLinks = level.edgeLinks || [];
-    field.innerHTML = "";
-    this.paused = false;
-    this.level = index;
-    this.storyScript = level.storyScript;
-    this.smokeScreen = this.createSmokeScreen();
-    document.querySelector(".story").innerHTML = parseDialog(level.story);
-    document.querySelector(".story").classList.remove("invisible");
-    field.style.width = `${level.mapSize[0] * CELL_SIZE}px`;
-    field.style.height = `${level.mapSize[1] * CELL_SIZE}px`;
-    this.hero = new Hero(level.hero);
-    this.globalInventory.forEach(item => item.equip(this.hero));
-    this.obstacles = level.obstacles.map(o => new obstacleConstructors[o.type](o));
+    fetch(`levels/${index}.json`)
+      .then(data => data.json())
+      .then(level => {
+        this.globalInventory = this.globalInventory.filter((item, i, arr) => arr.indexOf(item) === i);//remove duplicates
+        this.edgeLinks = level.edgeLinks || [];
+        field.innerHTML = "";
+        this.paused = false;
+        this.level = index;
+        this.storyScript = level.storyScript;
+        this.smokeScreen = this.createSmokeScreen();
+        document.querySelector(".story").innerHTML = parseDialog(level.story);
+        document.querySelector(".story").classList.remove("invisible");
+        field.style.width = `${level.mapSize[0] * CELL_SIZE}px`;
+        field.style.height = `${level.mapSize[1] * CELL_SIZE}px`;
+        this.hero = new Hero(level.hero);
+        this.globalInventory.forEach(item => item.equip(this.hero));
+        this.obstacles = level.obstacles.map(o => new obstacleConstructors[o.type](o));
+      })
   }
 
   createSmokeScreen() {
