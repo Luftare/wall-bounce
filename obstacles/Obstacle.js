@@ -26,6 +26,14 @@ class Obstacle {
     return this instanceof type;
   }
 
+  openDialog(text, buttonText, buttonHandler = game.closeDialog.bind(game)) {
+    this.borders.classList.add('center');
+    game.openDialog(text, buttonText, (e) => {
+      this.borders.classList.remove('center');
+      buttonHandler(e);
+    })
+  }
+
   openEndDialog(nextId) {
     this.borders.classList.add("center");
     game.finishLevel(nextId);

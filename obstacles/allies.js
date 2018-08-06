@@ -6,18 +6,11 @@ class Princess extends Obstacle {
     this.element.classList.add("princess");
     this.element.style.position = "relative";
     this.element.style.backgroundImage = "url('assets/images/princess.svg')";
-    this.element.style.zIndex = 20;
-    this.borders.style.zIndex = 20;
     this.borders.classList.add("borders--blue");
   }
 
   onCollision() {
     eval(game.storyScript);
-    // if (game.obstacles.find(o => o instanceof Flower)) {
-    //   game.hero.die();
-    // } else {
-    //   this.openEndDialog();
-    // }
   }
 }
 
@@ -29,8 +22,6 @@ class Wizard extends Obstacle {
     this.element.classList.add("wizard");
     this.element.style.position = "relative";
     this.element.style.backgroundImage = "url('assets/images/wizard.svg')";
-    this.element.style.zIndex = 20;
-    this.borders.style.zIndex = 20;
     this.borders.classList.add("borders--blue");
   }
 

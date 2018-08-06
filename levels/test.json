@@ -1,0 +1,1 @@
+{"mapSize":[6,6],"hero":[3,5],"obstacles":[{"type":"princess","position":[3,3]}],"story":"PRINCESS: YO!","endNote":"PRINCESS: asdasd","endNoteButtonText":"","edgeLinks":[null,null,null,null],"storyScript":"game.openDialog('moro');"}

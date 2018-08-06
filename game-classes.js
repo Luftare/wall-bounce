@@ -61,7 +61,6 @@ class Game {
         field.innerHTML = "";
         this.paused = false;
         this.storyScript = level.storyScript;
-        this.smokeScreen = this.createSmokeScreen();
         document.querySelector(".story").innerHTML = parseDialog(level.story);
         document.querySelector(".story").classList.remove("invisible");
         field.style.width = `${level.mapSize[0] * CELL_SIZE}px`;
@@ -72,33 +71,48 @@ class Game {
       })
   }
 
-  createSmokeScreen() {
+  openDialog(text, buttonText = 'Ok.', buttonHandler = this.closeDialog.bind(this)) {
+    this.pause();
+    if(document.querySelector('.game-dialog')) field.removeChild(this.dialog);
     const element = document.createElement("div");
-    element.classList.add("smoke-screen");
+    element.classList.add("game-dialog");
+    element.classList.add("game-dialog--visible");
     element.innerHTML = `
-      <div class="smoke__content">
-        <div class="smoke__text"></div>
-        <button class="smoke__button"></button>
+      <div class="game-dialog__content">
+        <div class="game-dialog__text">${text}</div>
+        <button class="game-dialog__button">${buttonText}</button>
       </div>
     `;
     field.appendChild(element);
-    return element;
+    document.querySelector(".game-dialog__button").addEventListener("click", buttonHandler);
+    this.dialog = element;
+  }
+
+  closeDialog() {
+    this.resume();
+    if(this.dialog) {
+      field.removeChild(this.dialog);
+    }
   }
 
   finishLevel(nextLevelId = this.levelId + 1) {
     const level = this.levelData;
-    this.paused = true;
-    this.hero.element.classList.add("invisible");
-    document.querySelector(".smoke__text").innerHTML = parseDialog(
-      level.endNote
-    );
-    document.querySelector(".smoke__button").innerHTML =
-      level.endNoteButtonText || "";
-    document.querySelector(".smoke__button").addEventListener("click", () => {
+    const text = parseDialog(level.endNote);
+    const buttonText = level.endNoteButtonText;
+    const buttonHandler = () => {
       router.goTo(`/levels/${nextLevelId}`);
-    });
-    this.smokeScreen.classList.add("smoke-screen--visible");
+    };
+    this.openDialog(text, buttonText, buttonHandler);
+    this.hero.element.classList.add("invisible");
     document.querySelector(".story").classList.add("invisible");
+  }
+
+  pause() {
+    this.paused = true;
+  }
+
+  resume() {
+    this.paused = false;
   }
 
   start() {
