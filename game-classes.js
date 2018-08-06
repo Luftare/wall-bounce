@@ -36,6 +36,7 @@ class Game {
     this.globalInventory = [];
     this.edgeLinks = [];
     this.level = 0;
+    this.levelData = {};
     this.timeFactor = 1;
     this.paused = true;
     this.loop = new Loop(dt => {
@@ -53,6 +54,7 @@ class Game {
     fetch(`levels/${index}.json`)
       .then(data => data.json())
       .then(level => {
+        this.levelData = level;
         this.globalInventory = this.globalInventory.filter((item, i, arr) => arr.indexOf(item) === i);//remove duplicates
         this.edgeLinks = level.edgeLinks || [];
         field.innerHTML = "";
@@ -84,7 +86,7 @@ class Game {
   }
 
   finishLevel(nextLevelIndex = this.level + 1) {
-    const level = levels[this.level];
+    const level = this.levelData;
     this.paused = true;
     this.hero.element.classList.add("invisible");
     document.querySelector(".smoke__text").innerHTML = parseDialog(
