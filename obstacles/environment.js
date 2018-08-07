@@ -30,16 +30,16 @@ class Wind extends Obstacle {
   onCollision(dt) {
     if(magnitude(game.hero.velocity) < 10) return;
     switch (this.direction) {
-      case "UP":
+      case UP:
         game.hero.velocity[1] -= this.force * dt;
         break;
-      case "DOWN":
+      case DOWN:
         game.hero.velocity[1] += this.force * dt;
         break;
-      case "LEFT":
+      case LEFT:
         game.hero.velocity[0] -= this.force * dt;
         break;
-      case "RIGHT":
+      case RIGHT:
         game.hero.velocity[0] += this.force * dt;
         break;
     }

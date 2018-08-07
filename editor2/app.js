@@ -3,13 +3,26 @@ const appConfig = {
   data: {
     entities: [],
     cellSize: 40,
-    mapCellsX: 7,
-    mapCellsY: 7,
+    mapSize: [7, 7],
     showEntityTools: false,
     showMapTools: false,
     selectedEntity: null,
-    entityTypes: ['tree', 'wall', 'orc', 'princess'],
+    entityTypes: allObstacles,
     selectedEntityType: 'tree',
+    initScript: '',
+    mapStory: ''
+  },
+  mounted() {
+    window.addEventListener('keydown', (e) => {
+      switch (e.key) {
+        case 'Escape':
+          this.selectedEntity = null;
+          break;
+        case 'x':
+          this.entities = this.entities.filter(entity => entity !== this.selectedEntity);
+          break;
+      }
+    });
   },
   methods: {
     coordToCell(pos) {
@@ -28,7 +41,6 @@ const appConfig = {
       this.selectedEntity = entity;
     },
     addEntity(position) {
-      console.log("adding,,.")
       this.entities.push({
         type: this.selectedEntityType,
         position,

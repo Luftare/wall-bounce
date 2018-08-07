@@ -8,8 +8,10 @@ html, body {
 }
 
 .editor {
+  position: relative;
   display: grid;
-  grid-template-rows: 36px auto;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 36px 1fr;
   height: 100vh;
 }
 
@@ -23,7 +25,7 @@ html, body {
 }
 
 .map {
-  grid-area: 2 / 2 / 2 / 2;
+  grid-area: 2 / 1 / 2 / 4;
   background-color: #444;
   display: flex;
   align-items: center;
@@ -32,13 +34,33 @@ html, body {
 }
 
 .map-tools {
-  grid-area: 2 / 1 / 2 / 1;
+  grid-area: 2 / 1 / 2 / 2;
   background-color: #aaa;
+  padding: 8px;
+  overflow-y: scroll;
+  z-index: 10;
+}
+
+.map-tools__entity-types {
+  display: grid;
+  grid-template-columns: repeat( auto-fill, minmax(80px, 1fr) );
+  grid-gap: 4px;
+}
+
+.map-tools__entity-type-option {
+  background-color: pink;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
 }
 
 .entity-tools {
   grid-area: 2 / 3 / 2 / 3;
   background-color: lightblue;
+  padding: 8px;
+  overflow-y: scroll;
+  z-index: 10;
 }
 
 .map__field {
@@ -48,9 +70,26 @@ html, body {
 }
 
 .map__entity {
+  font-size: 8px;
   position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: white;
+}
+
+.code-editor {
+  padding: 4px;
+  width: 100%;
+  min-height: 200px;
+  background-color: #447;
+  color: white;
+}
+
+.text-editor {
+  padding: 4px;
+  width: 100%;
+  min-height: 100px;
+  background-color: #eee;
+  color: black;
 }
