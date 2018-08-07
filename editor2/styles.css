@@ -1,0 +1,56 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+.editor {
+  display: grid;
+  grid-template-rows: 36px auto;
+  height: 100vh;
+}
+
+.top-bar {
+  grid-area: 1 / 1 / 1 / 4;
+  background-color: pink;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.map {
+  grid-area: 2 / 2 / 2 / 2;
+  background-color: #444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: scroll;
+}
+
+.map-tools {
+  grid-area: 2 / 1 / 2 / 1;
+  background-color: #aaa;
+}
+
+.entity-tools {
+  grid-area: 2 / 3 / 2 / 3;
+  background-color: lightblue;
+}
+
+.map__field {
+  position: relative;
+  background-color: green;
+  cursor: crosshair;
+}
+
+.map__entity {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}

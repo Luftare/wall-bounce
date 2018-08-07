@@ -1,0 +1,54 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js" defer></script>
+<script src="utils.js" defer></script>
+<script src="app.js" defer></script>
+<link rel="stylesheet" type="text/css" href="styles.css">
+<div id="root">
+  <div
+    class="editor"
+    :style="{
+      gridTemplateColumns: ((showMapTools ? '300px' : '0px') + ' 1fr ' + (!!selectedEntity ? '300px' : '0px')),
+    }"
+  >
+    <div class="top-bar">
+      <button @click="showMapTools = !showMapTools">Map tools</button>
+      <button @click="showEntityTools = !showEntityTools">Entity tools</button>
+    </div>
+    <div
+      class="map"
+      @click="selectedEntity = null"
+    >
+      <div
+        class="map__field"
+        :style="{
+          width: (mapCellsX * cellSize) + 'px',
+          height: (mapCellsY * cellSize) + 'px',
+        }"
+        @click="handleMapFieldClick"
+      >
+        <div
+          class="map__entity"
+          v-for="entity in entities"
+          :style="{
+            left: (entity.position[0] * cellSize) + 'px',
+            top: (entity.position[1] * cellSize) + 'px',
+            width: cellSize + 'px',
+            height: cellSize + 'px',
+            border: selectedEntity === entity ? '2px solid red' : 'none',
+          }"
+          @click.stop="handleEntityClick(entity)"
+        >{{entity.type}}</div>
+      </div>
+    </div>
+    <div class="map-tools"></div>
+    <div class="entity-tools">
+      <div v-for="(val, key) in selectedEntity">
+        <h4>type:</h4>
+        <div>
+          <select @input="selectedEntity.type = event.target.value" v-model="selectedEntity.type">
+            <option v-for="type in entityTypes" :value="type">{{type}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
