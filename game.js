@@ -12,8 +12,13 @@ window.addEventListener("load", () => {
   game.start();
 
   router.add("/levels/:index", ({ index }) => {
-    game.loadLevel(index);
+    game.handleNewLevelRequest(index);
   });
+
+  router.add('', () => {
+    game.handleNewLevelRequest('meetPrincessAtGarden');
+  })
+
 
   router.update();
 });

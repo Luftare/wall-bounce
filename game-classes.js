@@ -35,7 +35,7 @@ class Game {
   constructor() {
     this.globalInventory = [];
     this.edgeLinks = [];
-    this.levelId = 'meetPrincessAtGarden';
+    this.levelId = '';
     this.levelData = {};
     this.timeFactor = 1;
     this.paused = true;
@@ -44,14 +44,17 @@ class Game {
       this.hero.update(dt * this.timeFactor);
     });
     this.hero = null;
-    this.loadLevel(this.levelId);
   }
 
   find(type) {
     return this.entities.find(o => o instanceof type);
   }
 
-  loadLevel(id = this.levelId) {
+  loadLevel(id) {
+    router.goTo(`/levels/${id}`);
+  }
+
+  handleNewLevelRequest(id = this.levelId) {
     fetch(`levels/${id}.json`)
       .then(data => data.json())
       .then(level => {
