@@ -1,149 +1,106 @@
-body {
+* {
+  box-sizing: border-box;
+}
+
+html, body {
   margin: 0;
-  display: grid;
-  grid-template-columns: 400px auto;
-  grid-template-rows: 100vh;
-  background-color: #eee;
+  padding: 0;
 }
 
-h4, h3 {
-  margin: 0;
-}
-
-textarea {
-  height: 150px;
-}
-
-.game {
-  background-color: #444;
+.editor {
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 36px 1fr;
+  height: 100vh;
 }
 
-.tools {
-  display: grid;
-  grid-gap: 24px;
-  background-color: #aaa;
-  padding: 8px;
+.top-bar {
+  grid-area: 1 / 1 / 1 / 4;
+  background-color: #222;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.map {
+  grid-area: 2 / 1 / 2 / 4;
+  background-color: #444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: scroll;
 }
 
-#game-field {
-  position: relative;
-  background-color: green;
-  width: 320px;
-  height: 320px;
-  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Color_icon_green.svg/2000px-Color_icon_green.svg.png');
-  background-size: 32px 32px;
+.map-tools {
+  grid-area: 2 / 1 / 2 / 2;
+  background-color: #aaa;
+  padding: 8px;
+  overflow-y: scroll;
+  z-index: 10;
 }
 
-.character-tools__options {
+.map-tools__entity-types {
   display: grid;
   grid-template-columns: repeat( auto-fill, minmax(80px, 1fr) );
   grid-gap: 4px;
 }
 
-.character-tools__options label {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 18px;
-  padding: 4px;
-  background-color: lightgrey;
-}
-
-input:checked + label {
+.map-tools__entity-type-option {
   background-color: pink;
-}
-
-.map-tools {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-
-.map-tools__links {
   display: flex;
-  flex-direction: column;
   align-items: center;
-}
-
-.map-tools__links div {
-  display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  width 50%;
+  padding: 4px;
 }
 
-.map-tools__links input {
-  width: 30px;
-  margin: 0 50px;
-  text-align: center;
+.entity-tools {
+  grid-area: 2 / 3 / 2 / 3;
+  background-color: lightblue;
+  padding: 8px;
+  overflow-y: scroll;
+  z-index: 10;
 }
 
-.map-tools__links section {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+.map__field {
+  position: relative;
+  background-color: green;
+  cursor: crosshair;
 }
 
-.export-tools, .story-tools {
-  display: flex;
-  flex-direction: column;
-}
-
-.obstacle {
+.map__entity {
+  font-size: 8px;
   position: absolute;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  padding: 2px;
-  box-sizing: border-box;
-  background-color: grey;
-  width: 32px;
-  height: 32px;
-  font-size: 8px;
-}
-
-.obstacle__level-link {
-  width: 80%;
-  font-size: 8px;
-  text-align: center;
-}
-
-.wall {
-  background-color: grey;
-}
-
-.tree {
-  background-color: brown;
-}
-
-.flower {
-  background-color: orange;
-}
-
-.orc {
-  background-color: red;
-}
-
-.princess {
-  background-color: pink;
-}
-
-.hero {
-  background-color: lightblue;
-}
-
-.wind {
+  justify-content: center;
   background-color: white;
 }
 
-.wind-direction {
+.code-editor {
+  padding: 4px;
   width: 100%;
-  font-size: 8px;
-  text-align: center;
+  min-height: 200px;
+  background-color: #447;
+  color: white;
+}
+
+.text-editor {
+  padding: 4px;
+  width: 100%;
+  min-height: 100px;
+  background-color: #eee;
+  color: black;
+}
+
+.vector-editor {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 8px;
+}
+
+.vector-editor input {
+  width: 100%;
 }

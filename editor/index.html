@@ -1,74 +1,86 @@
-<html>
-  <head>
-    <title>Wall Bounce - Editor</title>
-    <script src="../types.js" defer></script>
-    <script src="typeCreators.js" defer></script>
-    <script src="main.js" defer></script>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-  </head>
-  <body>
-    <div class="tools">
-      <div class="character-tools">
-        <h4>Characters</h4>
-        <div class="character-tools__options"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js" defer></script>
+<script src="../types.js" defer></script>
+<script src="utils.js" defer></script>
+<script src="app.js" defer></script>
+<link rel="stylesheet" type="text/css" href="styles.css">
+<div id="root">
+  <div
+    class="editor"
+  >
+    <div class="top-bar">
+      <button @click="showMapTools = !showMapTools">Map tools</button>
+      <button @click="showEntityTools = !showEntityTools">Entity tools</button>
+    </div>
+    <div
+      class="map"
+      @click="selectedEntity = null"
+    >
+      <div
+        class="map__field"
+        :style="{
+          width: (mapSize[0] * cellSize) + 'px',
+          height: (mapSize[1] * cellSize) + 'px',
+        }"
+        @click="handleMapFieldClick"
+      >
+        <div
+          class="map__entity"
+          v-for="entity in entities"
+          :style="{
+            left: (entity.position[0] * cellSize) + 'px',
+            top: (entity.position[1] * cellSize) + 'px',
+            width: cellSize + 'px',
+            height: cellSize + 'px',
+            border: selectedEntity === entity ? '2px solid red' : 'none',
+          }"
+          @click.stop="handleEntityClick(entity)"
+        >{{entity.type}}</div>
       </div>
-      <div class="map-tools">
-        <section>
-          <h4>Width</h4>
-          <input type="number" id="map-tools__width" value="10" />
-        </section>
-        <section>
-          <h4>Height</h4>
-          <input type="number" id="map-tools__height" value="10" />
-        </section>
+    </div>
+
+    <div class="map-tools" v-if="showMapTools">
+      <div class="map-tools__entity-types">
+        <div
+          class="map-tools__entity-type-option"
+          v-for="type in entityTypes"
+          :style="{
+            backgroundColor: selectedEntityType === type ? 'lightgrey' : 'white'
+          }"
+          @click="selectedEntityType = type"
+        >{{type}}</div>
       </div>
-      <div>
-        <h4>Edge links</h4>
-        <div class="map-tools__links">
-          <div>
-            <h4>Top</h4>
-            <input id="map-tools__link-top" />
-          </div>
-          <section>
-            <div>
-            <h4>Left</h4>
-            <input id="map-tools__link-left" />
-          </div>
-          <div>
-            <h4>Right</h4>
-            <input id="map-tools__link-right" />
-          </div>
-          </section>
-          <div>
-            <h4>Bottom</h4>
-            <input id="map-tools__link-bottom" />
-          </div>
+      <h4>Map size</h4>
+      <input type="number" v-model="mapSize[0]"/>
+      <input type="number" v-model="mapSize[1]"/>
+      <h4>Map init script</h4>
+      <textarea v-model="initScript" class="code-editor"></textarea>
+      <h4>Map story</h4>
+      <textarea v-model="mapStory" class="text-editor"></textarea>
+      <h4>Import/Export</h4>
+      <textarea v-model="encodedMapData" @input="parseImportedMapData" class="code-editor"></textarea>
+    </div>
+
+    <div class="entity-tools" v-if="selectedEntity">
+      <h4>Type:</h4>
+      <select @input="setSelectedEntityType(event.target.value)" v-model="selectedEntity.type">
+        <option v-for="type in entityTypes" :value="type">{{type}}</option>
+      </select>
+      <div v-for="prop in entitySchemas[selectedEntity.type]">
+        <h4>{{prop.name}}</h4>
+        <select v-if="prop.type === DIRECTION" @input="selectedEntity[prop.name] = event.target.value" v-model="selectedEntity[prop.name]">
+          <option v-for="direction in directions" :value="direction">{{direction}}</option>
+        </select>
+        <textarea v-if="prop.type === SCRIPT" v-model="selectedEntity[prop.name]" class="code-editor"></textarea>
+        <textarea v-if="prop.type === DIALOG" v-model="selectedEntity[prop.name]" class="text-editor"></textarea>
+        <textarea v-if="prop.type === TEXT" v-model="selectedEntity[prop.name]" class="text-editor"></textarea>
+        <input v-if="prop.type === STRING" v-model="selectedEntity[prop.name]" class="string-editor"/>
+        <input v-if="prop.type === NUMBER" v-model="selectedEntity[prop.name]" class="string-editor" type="number"/>
+        <div v-if="prop.type === VECTOR" class="vector-editor">
+          <input type="number" v-model="selectedEntity[prop.name][0]"/>
+          <input type="number" v-model="selectedEntity[prop.name][1]"/>
         </div>
-      </div>
-      <div class="story-tools">
-        <h4>Story script</h4>
-        <textarea id="story-script"></textarea>
-      </div>
-      <div class="story-tools">
-        <h4>Story</h4>
-        <textarea id="story-editor"></textarea>
-      </div>
-      <div class="story-tools">
-        <h4>End note</h4>
-        <textarea id="end-note-editor"></textarea>
-      </div>
-      <div class="story-tools">
-        <h4>End note button text</h4>
-        <input type="text" id="end-note-button-text-editor" />
-      </div>
-      <div class="export-tools">
-        <h4>Export / Import</h4>
-        <button id="export-json">Import/Export</button>
-        <textarea id="json-editor"></textarea>
+
       </div>
     </div>
-    <div class="game">
-      <div id="game-field"></div>
-    </div>
-  </body>
-</html>
+  </div>
+</div>
