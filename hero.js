@@ -1,5 +1,7 @@
 class Hero {
-  constructor(position) {
+  constructor(conf) {
+    const position = conf.position;
+    this[ON_EDGE_COLLISION] = conf[ON_EDGE_COLLISION];
     this.maxPower = 0;
     this.power = this.maxPower;
     this.maxFitness = 3;
@@ -30,6 +32,8 @@ class Hero {
     arrow.classList = "hero__arrow";
     element.appendChild(arrow);
     this.arrow = arrow;
+
+    game.globalInventory.forEach(item => item.equip(this));
   }
 
   update(dt) {
@@ -77,6 +81,7 @@ class Hero {
     if (this.element.classList.contains("dead")) return;
     this.velocity = [0, 0];
     this.element.classList.add("dead");
+    this.borders.classList = 'obstacle-borders';
     setTimeout(() => {
       game.loadLevel(game.levelId);
     }, 2500);
@@ -84,12 +89,10 @@ class Hero {
 
   handleBoundaryCollisions(dt) {
     const bounds = [field.offsetWidth, field.offsetHeight];
+    let edge = null;
     this.position.forEach((_, i) => {
       if (this.position[i] < 0) {
-        if (i === 0 && game.edgeLinks[3])
-          eval(game.storyScript);
-        if (i === 1 && game.edgeLinks[0])
-          eval(game.storyScript);
+        edge = i === 0 ? LEFT : TOP;
         this.position[i] = 0;
         this.velocity = this.velocity.map(
           (val, j) =>
@@ -97,10 +100,7 @@ class Hero {
         );
       }
       if (this.position[i] + this.size > bounds[i]) {
-        if (i === 0 && game.edgeLinks[1])
-          eval(game.storyScript);
-        if (i === 1 && game.edgeLinks[2])
-          eval(game.storyScript);
+        edge = i === 0 ? RIGHT : BOTTOM;
         this.position[i] = bounds[i] - this.size;
         this.velocity = this.velocity.map(
           (val, j) =>
@@ -108,10 +108,11 @@ class Hero {
         );
       }
     });
+    if(this[ON_EDGE_COLLISION] && edge) eval(this[ON_EDGE_COLLISION]);
   }
 
   handleObstacleCollisions(dt) {
-    game.obstacles.forEach(obstacle => {
+    game.entities.forEach(obstacle => {
       const collision = getSquareCollisionSide(this, obstacle);
       if (collision) {
         obstacle.onCollision(dt);
@@ -123,7 +124,7 @@ class Hero {
 
   bounceFromCollision(obstacle, collision) {
     switch (collision) {
-      case "TOP":
+      case TOP:
         this.position[1] = obstacle.position[1] - this.size;
         this.velocity = this.velocity.map(
           (val, i) =>
@@ -132,7 +133,7 @@ class Hero {
               : val * obstacle.bounciness
         );
         break;
-      case "RIGHT":
+      case RIGHT:
         this.position[0] = obstacle.position[0] + obstacle.size;
         this.velocity = this.velocity.map(
           (val, i) =>
@@ -141,7 +142,7 @@ class Hero {
               : val * obstacle.bounciness
         );
         break;
-      case "BOTTOM":
+      case BOTTOM:
         this.position[1] = obstacle.position[1] + obstacle.size;
         this.velocity = this.velocity.map(
           (val, i) =>
@@ -150,7 +151,7 @@ class Hero {
               : val * obstacle.bounciness
         );
         break;
-      case "LEFT":
+      case LEFT:
         this.position[0] = obstacle.position[0] - this.size;
         this.velocity = this.velocity.map(
           (val, i) =>
@@ -204,7 +205,7 @@ class Hero {
       .size * 0.7}px)`;
 
     this.arrow.classList[moving ? "add" : "remove"]("hero__arrow--hidden");
-    if (!game.paused) element.classList[moving ? "add" : "remove"]("run");
+    element.classList[moving && !game.paused ? "add" : "remove"]("run");
 
     statusPower.innerHTML = `${this.power} Power`;
     statusFitness.innerHTML = `${this.fitness} Fitness`;

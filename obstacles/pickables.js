@@ -7,7 +7,7 @@ class Flower extends Obstacle {
   }
 
   onCollision() {
-    game.obstacles = game.obstacles.filter(obstacle => obstacle !== this);
+    game.entities = game.entities.filter(obstacle => obstacle !== this);
     this.borders.classList.add("picked-up");
     game.hero.element.classList.add("picking-up");
     game.timeFactor = 0;

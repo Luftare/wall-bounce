@@ -10,7 +10,7 @@ class Orc extends Obstacle {
   onCollision() {
     const heroHasPowerLeft = game.hero.fight(this);
     if (heroHasPowerLeft) {
-      game.obstacles = game.obstacles.filter(obstacle => obstacle !== this);
+      game.entities = game.entities.filter(obstacle => obstacle !== this);
       this.element.classList.add("dead");
       this.borders.classList.remove("borders--red");
     } else {

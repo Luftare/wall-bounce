@@ -1,26 +1,26 @@
 class Tree extends Obstacle {
-  constructor({position}) {
-    super(position);
+  constructor(conf) {
+    super(conf.position);
     this.bounciness = 0.3;
     this.element.style.backgroundColor = "rgba(100, 105, 0, 1)";
-    this.element.style.backgroundImage = "url('assets/images/tree.svg')";
+    this.element.style.backgroundImage = `url('assets/images/${conf[CUSTOM_IMAGE] || 'tree'}.svg')`;
   }
 }
 
 class Wall extends Obstacle {
-  constructor({position}) {
-    super(position);
-    this.element.style.backgroundImage = "url('assets/images/wall.svg')";
+  constructor(conf) {
+    super(conf.position);
+    this.element.style.backgroundImage = `url('assets/images/${conf[CUSTOM_IMAGE] || 'wall'}.svg')`;
   }
 }
 
 class Wind extends Obstacle {
-  constructor({position, direction}) {
-    super(position);
-    this.direction = direction;
+  constructor(conf) {
+    super(conf.position);
+    this.direction = conf.direction;
     this.force = 1000;
     this.nonBlocking = true;
-    this.element.style.backgroundImage = "url('assets/images/wind.svg')";
+    this.element.style.backgroundImage = `url('assets/images/${conf[CUSTOM_IMAGE] || 'wind'}.svg')`;
     this.element.classList.add('wind');
     this.element.classList.add(`wind--${direction.toLowerCase()}`);
     this.element.style.animationDelay = `${Math.random() * 700}ms`;

@@ -93,3 +93,14 @@ html, body {
   background-color: #eee;
   color: black;
 }
+
+.vector-editor {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 8px;
+}
+
+.vector-editor input {
+  width: 100%;
+}

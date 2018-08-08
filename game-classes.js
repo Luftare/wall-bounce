@@ -35,7 +35,7 @@ class Game {
   constructor() {
     this.globalInventory = [];
     this.edgeLinks = [];
-    this.levelId = 0;
+    this.levelId = 'meetPrincessAtGarden';
     this.levelData = {};
     this.timeFactor = 1;
     this.paused = true;
@@ -43,11 +43,12 @@ class Game {
       if (this.paused) return;
       this.hero.update(dt * this.timeFactor);
     });
+    this.hero = null;
     this.loadLevel(this.levelId);
   }
 
   find(type) {
-    return this.obstacles.find(o => o instanceof type);
+    return this.entities.find(o => o instanceof type);
   }
 
   loadLevel(id = this.levelId) {
@@ -57,17 +58,14 @@ class Game {
         this.levelId = id;
         this.levelData = level;
         this.globalInventory = this.globalInventory.filter((item, i, arr) => arr.indexOf(item) === i);//remove duplicate items
-        this.edgeLinks = level.edgeLinks || [];
         field.innerHTML = "";
-        this.paused = false;
-        this.storyScript = level.storyScript;
-        document.querySelector(".story").innerHTML = parseDialog(level.story);
+        document.querySelector(".story").innerHTML = parseDialog(level.mapStory);
         document.querySelector(".story").classList.remove("invisible");
         field.style.width = `${level.mapSize[0] * CELL_SIZE}px`;
         field.style.height = `${level.mapSize[1] * CELL_SIZE}px`;
-        this.hero = new Hero(level.hero);
-        this.globalInventory.forEach(item => item.equip(this.hero));
-        this.obstacles = level.obstacles.map(o => new obstacleConstructors[o.type](o));
+        this.entities = level.entities.filter(e => e.type !== HERO).map(o => new obstacleConstructors[o.type](o));
+        this.hero = new Hero(level.entities.find(e => e.type === HERO));
+        this.paused = false;
       })
   }
 

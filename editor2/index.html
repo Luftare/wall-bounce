@@ -1,5 +1,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js" defer></script>
-<script src="../allObstacles.js" defer></script>
+<script src="../types.js" defer></script>
 <script src="utils.js" defer></script>
 <script src="app.js" defer></script>
 <link rel="stylesheet" type="text/css" href="styles.css">
@@ -37,6 +37,7 @@
         >{{entity.type}}</div>
       </div>
     </div>
+
     <div class="map-tools" v-if="showMapTools">
       <div class="map-tools__entity-types">
         <div
@@ -48,28 +49,38 @@
           @click="selectedEntityType = type"
         >{{type}}</div>
       </div>
-      <h4>Map size:</h4>
+      <h4>Map size</h4>
       <input type="number" v-model="mapSize[0]"/>
       <input type="number" v-model="mapSize[1]"/>
-      <h4>Init script</h4>
+      <h4>Map init script</h4>
       <textarea v-model="initScript" class="code-editor"></textarea>
       <h4>Map story</h4>
       <textarea v-model="mapStory" class="text-editor"></textarea>
+      <h4>Import/Export</h4>
+      <textarea v-model="encodedMapData" @input="parseImportedMapData" class="code-editor"></textarea>
     </div>
+
     <div class="entity-tools" v-if="selectedEntity">
       <h4>Type:</h4>
-      <select @input="selectedEntity.type = event.target.value" v-model="selectedEntity.type">
+      <select @input="setSelectedEntityType(event.target.value)" v-model="selectedEntity.type">
         <option v-for="type in entityTypes" :value="type">{{type}}</option>
       </select>
-      <h4>x & y coords:</h4>
-      <input type="number" v-model="selectedEntity.position[0]"/>
-      <input type="number" v-model="selectedEntity.position[1]"/>
-      <h4>Collision script</h4>
-      <textarea v-model="selectedEntity.collisionScript" class="code-editor"></textarea>
-      <h4 v-if="selectedEntity.type === WIND">Direction</h4>
-      <select v-if="selectedEntity.type === WIND" @input="selectedEntity.direction = event.target.value" v-model="selectedEntity.direction">
-        <option v-for="direction in gridDirections" :value="direction">{{direction}}</option>
-      </select>
+      <div v-for="prop in entitySchemas[selectedEntity.type]">
+        <h4>{{prop.name}}</h4>
+        <select v-if="prop.type === DIRECTION" @input="selectedEntity[prop.name] = event.target.value" v-model="selectedEntity[prop.name]">
+          <option v-for="direction in directions" :value="direction">{{direction}}</option>
+        </select>
+        <textarea v-if="prop.type === SCRIPT" v-model="selectedEntity[prop.name]" class="code-editor"></textarea>
+        <textarea v-if="prop.type === DIALOG" v-model="selectedEntity[prop.name]" class="text-editor"></textarea>
+        <textarea v-if="prop.type === TEXT" v-model="selectedEntity[prop.name]" class="text-editor"></textarea>
+        <input v-if="prop.type === STRING" v-model="selectedEntity[prop.name]" class="string-editor"/>
+        <input v-if="prop.type === NUMBER" v-model="selectedEntity[prop.name]" class="string-editor" type="number"/>
+        <div v-if="prop.type === VECTOR" class="vector-editor">
+          <input type="number" v-model="selectedEntity[prop.name][0]"/>
+          <input type="number" v-model="selectedEntity[prop.name][1]"/>
+        </div>
+
+      </div>
     </div>
   </div>
 </div>

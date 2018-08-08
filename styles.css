@@ -185,7 +185,6 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   transition: top 20ms, left 20ms;
-  z-index: 20;
   width: 100%;
   height: 100%;
 }

@@ -22,11 +22,18 @@ class Obstacle {
     field.appendChild(borders);
   }
 
+  die() {
+    game.entities = game.entities.filter(obstacle => obstacle !== this);
+    this.element.classList.add("dead");
+    this.borders.classList = 'obstacle-borders';
+  }
+
   is(type) {
     return this instanceof type;
   }
 
   openDialog(text, buttonText, buttonHandler = game.closeDialog.bind(game)) {
+    game.pause();
     this.borders.classList.add('center');
     game.openDialog(text, buttonText, (e) => {
       this.borders.classList.remove('center');

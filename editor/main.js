@@ -3,7 +3,7 @@ const field = document.getElementById('game-field');
 let mapSize = [10, 10];
 let hero = null;
 let heroPosition = null;
-let selectedObstacle = allObstacles[0];
+let selectedObstacle = entityTypes[0];
 let obstacles = [];
 
 window.addEventListener('load', () => {
@@ -70,7 +70,7 @@ document.getElementById('map-tools__height').addEventListener('input', (e) => {
   mapSize[1] = val;
 });
 
-allObstacles.forEach(type => {
+entityTypes.forEach(type => {
   const container = document.querySelector('.character-tools__options');
   const input = document.createElement('input');
   const label = document.createElement('label');
