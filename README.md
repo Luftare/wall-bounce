@@ -1,13 +1,23 @@
 ## Host locally for dev
 
-### Python 2:
-python -m SimpleHTTPServer 9999
+cd edit-levels
+npm install
+node .
 
-### Python 3:
-py -m http.server 9999
+### Editor:
+localhost:9999
+
+### Game:
+localhost:9999/game
+
+### Python 2 (game only):
+python -m SimpleHTTPServer 8888
+
+### Python 3 (game only):
+py -m http.server 8888
 
 ## TODO:
-* Local backend to automate level editing and creation
+* Local backend to automate level editing and creation - DONE
 * Allies that can be bounced to move
 * Orc image
 * Boring flower image

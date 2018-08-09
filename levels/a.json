@@ -1,0 +1,1 @@
+{"mapSize":[3,3],"entities":[{"type":"hero","position":[0,2],"CUSTOM_IMAGE":"","ON_EDGE_COLLISION":""},{"type":"orc","position":[0,0],"CUSTOM_IMAGE":""},{"type":"flower","position":[1,1],"CUSTOM_IMAGE":"","ON_COLLISION":""},{"type":"princess","position":[2,0],"CUSTOM_IMAGE":"","ON_COLLISION":""}],"mapStory":"","initScript":""}

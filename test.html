@@ -1,0 +1,18 @@
+<button id="post">POST</button>
+
+<script>
+document.getElementById("post").addEventListener("click", () => {
+  (async () => {
+    const rawResponse = await fetch('http://localhost:9999/levels/jou', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({a: 'on B'})
+    });
+    const response = await rawResponse.json();
+    console.log(response);
+  })();
+})
+</script>

@@ -14,7 +14,6 @@ class Princess extends Obstacle {
   }
 
   onCollision() {
-    console.log(this[ON_COLLISION])
     this[ON_COLLISION] && eval(this[ON_COLLISION]);
   }
 }

@@ -83,7 +83,7 @@ class Hero {
     this.element.classList.add("dead");
     this.borders.classList = 'obstacle-borders';
     setTimeout(() => {
-      game.loadLevel(game.levelId);
+      game.startLevel();
     }, 2500);
   }
 

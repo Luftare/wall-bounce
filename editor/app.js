@@ -1,6 +1,8 @@
 const appConfig = {
   el: '#root',
   data: {
+    fileName: '',
+    levels: [],
     entities: [],
     cellSize: 40,
     mapSize: [7, 7],
@@ -16,7 +18,7 @@ const appConfig = {
   computed: {
     encodedMapData() {
       const data = {
-        mapSize: this.mapSize,
+        mapSize: this.mapSize.map(val => parseInt(val)),
         entities: this.entities.map(e => {
           e[POSITION] = e[POSITION].map(val => parseInt(val));
           return e;
@@ -38,10 +40,30 @@ const appConfig = {
           break;
       }
     });
+
+    (async () => {
+      const res = await fetch('/levels');
+      const json = await res.text();
+      const levels = JSON.parse(json);
+      this.levels = levels;
+    })();
   },
   methods: {
     coordToCell(pos) {
       return pos.map(val => Math.floor(val / this.cellSize));
+    },
+    loadLevel(fileName) {
+      (async () => {
+        const res = await fetch(`/levels/${fileName}`);
+        const json = await res.text();
+        console.log(json);
+        const levelData = JSON.parse(json);
+        this.fileName = fileName;
+        this.selectedEntity = null;
+        for(let key in levelData) {
+          this[key] = levelData[key];
+        }
+      })();
     },
     parseImportedMapData(e) {
       const data = JSON.parse(e.target.value);
@@ -70,6 +92,30 @@ const appConfig = {
     },
     handleEntityClick(entity) {
       this.selectedEntity = entity;
+    },
+    saveLevel() {
+      (async () => {
+        const rawResponse = await fetch(`${window.location.href}levels/${this.fileName}`, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: this.encodedMapData
+        });
+        const response = await rawResponse.json();
+        this.levels = response;
+      })();
+    },
+    newLevel() {
+      this.fileName = '.json';
+      this.entities = [];
+      this.mapSize = [7, 7];
+      this.selectedEntity = null;
+      this.initScript = '';
+      this.mapStory = '';
+      this.mapData = '';
+      this.selectedEntityType = entityTypes[0];
     },
     addEntity(position) {
       const entity = entitySchemas[this.selectedEntityType].reduce((obj, prop) => {

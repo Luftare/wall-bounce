@@ -1,13 +1,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js" defer></script>
 <script src="../types.js" defer></script>
 <script src="app.js" defer></script>
-<link rel="stylesheet" type="text/css" href="styles.css">
+<link rel="stylesheet" type="text/css" href="editor-styles.css">
 <div id="root">
   <div
     class="editor"
   >
     <div class="top-bar">
       <button @click="showMapTools = !showMapTools">Map tools</button>
+      <button @click="newLevel">New level</button>
+      <div class="edit-file-name">
+        <input v-model="fileName" />
+        <button @click="saveLevel">Save</button>
+      </div>
       <button @click="showEntityTools = !showEntityTools">Entity tools</button>
     </div>
     <div
@@ -38,6 +43,11 @@
     </div>
 
     <div class="map-tools" v-if="showMapTools">
+      <h4>Levels</h4>
+      <div class="levels">
+        <div v-for="fileName in levels" class="levels__file-name" @click="loadLevel(fileName)">{{fileName}}</div>
+      </div>
+      <h4>Entity type</h4>
       <div class="map-tools__entity-types">
         <div
           class="map-tools__entity-type-option"

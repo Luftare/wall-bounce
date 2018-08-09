@@ -54,21 +54,26 @@ class Game {
     router.goTo(`/levels/${id}`);
   }
 
+  startLevel() {
+    const level = this.levelData;
+    this.globalInventory = this.globalInventory.filter((item, i, arr) => arr.indexOf(item) === i);//remove duplicate items
+    field.innerHTML = "";
+    document.querySelector(".story").innerHTML = parseDialog(level.mapStory);
+    document.querySelector(".story").classList.remove("invisible");
+    field.style.width = `${level.mapSize[0] * CELL_SIZE}px`;
+    field.style.height = `${level.mapSize[1] * CELL_SIZE}px`;
+    this.entities = level.entities.filter(e => e.type !== HERO).map(o => new obstacleConstructors[o.type](o));
+    this.hero = new Hero(level.entities.find(e => e.type === HERO));
+    this.paused = false;
+  }
+
   handleNewLevelRequest(id = this.levelId) {
+    this.levelId = id;
     fetch(`levels/${id}.json`)
       .then(data => data.json())
       .then(level => {
-        this.levelId = id;
         this.levelData = level;
-        this.globalInventory = this.globalInventory.filter((item, i, arr) => arr.indexOf(item) === i);//remove duplicate items
-        field.innerHTML = "";
-        document.querySelector(".story").innerHTML = parseDialog(level.mapStory);
-        document.querySelector(".story").classList.remove("invisible");
-        field.style.width = `${level.mapSize[0] * CELL_SIZE}px`;
-        field.style.height = `${level.mapSize[1] * CELL_SIZE}px`;
-        this.entities = level.entities.filter(e => e.type !== HERO).map(o => new obstacleConstructors[o.type](o));
-        this.hero = new Hero(level.entities.find(e => e.type === HERO));
-        this.paused = false;
+        this.startLevel();
       })
   }
 

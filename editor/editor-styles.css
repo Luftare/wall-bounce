@@ -24,6 +24,14 @@ html, body {
   justify-content: space-between;
 }
 
+.edit-file-name {
+  width: 300px;
+}
+
+.edit-file-name input {
+  width: 200px;
+}
+
 .map {
   grid-area: 2 / 1 / 2 / 4;
   background-color: #444;
@@ -39,6 +47,23 @@ html, body {
   padding: 8px;
   overflow-y: scroll;
   z-index: 10;
+}
+
+.levels {
+  display: grid;
+  grid-template-columns: repeat( auto-fill, 1fr);
+  grid-gap: 4px;
+}
+
+.levels__file-name {
+  background-color: #444;
+  color: white;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.levels__file-name:hover {
+  background-color: #448;
 }
 
 .map-tools__entity-types {
