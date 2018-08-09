@@ -68,9 +68,13 @@ class Hero {
     }
   }
 
-  openEndDialog(nextId) {
-    this.borders.classList.add("center");
-    game.finishLevel(nextId);
+  openDialog(text, buttonText, buttonHandler = (() => game.closeDialog())) {
+    game.pause();
+    this.borders.classList.add('center');
+    game.openDialog(text, buttonText, (e) => {
+      this.borders.classList.remove('center');
+      buttonHandler(e);
+    })
   }
 
   is(type) {
