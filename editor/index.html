@@ -84,6 +84,7 @@
         <textarea v-if="prop.type === TEXT" v-model="selectedEntity[prop.name]" class="text-editor"></textarea>
         <input v-if="prop.type === STRING" v-model="selectedEntity[prop.name]" class="string-editor"/>
         <input v-if="prop.type === NUMBER" v-model="selectedEntity[prop.name]" class="string-editor" type="number"/>
+        <input v-if="prop.type === BOOLEAN" v-model="selectedEntity[prop.name]" type="checkbox" />
         <div v-if="prop.type === VECTOR" class="vector-editor">
           <input type="number" v-model="selectedEntity[prop.name][0]"/>
           <input type="number" v-model="selectedEntity[prop.name][1]"/>

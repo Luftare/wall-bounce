@@ -5,7 +5,8 @@ const obstacleConstructors = {
   [WIND]: Wind,
   [FLOWER]: Flower,
   [TREE]: Tree,
-  [WIZARD]: Wizard
+  [WIZARD]: Wizard,
+  [SPRITE]: Sprite,
 };
 
 class Loop {
@@ -79,6 +80,11 @@ class Game {
 
   openDialog(text, buttonText = 'Ok.', buttonHandler = this.closeDialog.bind(this)) {
     this.pause();
+    this.entities.forEach(e => {
+      if(e.hovering) {
+        e.borders.classList.remove('hovering');
+      }
+    });
     if(document.querySelector('.game-dialog')) field.removeChild(this.dialog);
     const element = document.createElement("div");
     element.classList.add("game-dialog");
@@ -99,6 +105,11 @@ class Game {
     if(this.dialog) {
       field.removeChild(this.dialog);
     }
+    this.entities.forEach(e => {
+      if(e.hovering) {
+        e.borders.classList.add('hovering');
+      }
+    });
   }
 
   finishLevel(nextLevelId = this.levelId + 1) {

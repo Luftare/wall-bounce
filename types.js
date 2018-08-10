@@ -6,6 +6,7 @@ const WALL = 'wall';
 const FLOWER = 'flower';
 const WIND = 'wind';
 const WIZARD = 'wizard';
+const SPRITE = 'sprite';
 
 const ON_COLLISION = 'ON_COLLISION';
 const ON_EDGE_COLLISION = 'ON_EDGE_COLLISION';
@@ -28,9 +29,10 @@ const STRING = 'PROP_STRING';
 const DIALOG = 'PROP_DIALOG';
 const NUMBER = 'PROP_NUMBER';
 const TEXT = 'PROP_TEXT';
+const BOOLEAN = 'PROP_BOOLEAN';
 
 const events = [ON_COLLISION, ON_EDGE_COLLISION];
-const entityTypes = [HERO, PRINCESS, WIZARD, TREE, ORC, WALL, FLOWER, WIND];
+const entityTypes = [HERO, PRINCESS, WIZARD, TREE, ORC, WALL, FLOWER, WIND, SPRITE];
 const directions = [UP, DOWN, LEFT, RIGHT];
 
 const defaultTypeValues = {
@@ -41,6 +43,7 @@ const defaultTypeValues = {
   [DIALOG]: () => '',
   [TEXT]: () => '',
   [NUMBER]: () => 0,
+  [BOOLEAN]: () => false,
 };
 
 const defaultSchemas = [
@@ -91,6 +94,13 @@ const entitySchemas = {
     {
       name: 'direction',
       type: DIRECTION
+    }
+  ],
+  [SPRITE]: [
+    ...defaultSchemas,
+    {
+      name: 'hovering',
+      type: BOOLEAN
     }
   ],
 };

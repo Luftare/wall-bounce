@@ -7,6 +7,16 @@ class Tree extends Obstacle {
   }
 }
 
+class Sprite extends Obstacle {
+  constructor(conf) {
+    super(conf.position);
+    this.nonBlocking = true;
+    this.element.style.backgroundImage = `url('assets/images/${conf[CUSTOM_IMAGE]}.svg')`;
+    this.hovering = !!conf.hovering;
+    if(conf.hovering) this.borders.classList.add('hovering');
+  }
+}
+
 class Wall extends Obstacle {
   constructor(conf) {
     super(conf.position);

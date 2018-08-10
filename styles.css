@@ -309,6 +309,10 @@ body {
   animation: run 200ms infinite alternate linear;
 }
 
+.hovering {
+  z-index: 25;
+}
+
 .striking {
   animation: striking 500ms;
 }

@@ -56,7 +56,6 @@ const appConfig = {
       (async () => {
         const res = await fetch(`/levels/${fileName}`);
         const json = await res.text();
-        console.log(json);
         const levelData = JSON.parse(json);
         this.fileName = fileName;
         this.selectedEntity = null;
@@ -121,7 +120,7 @@ const appConfig = {
       const entity = entitySchemas[this.selectedEntityType].reduce((obj, prop) => {
         obj[prop.name] = defaultTypeValues[prop.type]();
         return obj;
-      }, {type: this.selectedEntityType})
+      }, {type: this.selectedEntityType});
       entity.position = position;
       this.entities.push(entity);
     }
