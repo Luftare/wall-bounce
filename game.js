@@ -1,4 +1,5 @@
 const field = document.getElementById("game-field");
+const gameContainer = document.querySelector(".game-container");
 const statusPower = document.querySelector(".stats__power");
 const statusFitness = document.querySelector(".stats__fitness");
 const CELL_SIZE = 64;
@@ -23,7 +24,7 @@ window.addEventListener("load", () => {
   router.update();
 });
 
-window.addEventListener("mousedown", e => {
+gameContainer.addEventListener("mousedown", e => {
   const scrollOffset = [
     window.pageXOffset || document.documentElement.scrollLeft,
     window.pageYOffset || document.documentElement.scrollTop
@@ -33,7 +34,7 @@ window.addEventListener("mousedown", e => {
   mousePosition = position;
 });
 
-window.addEventListener("mousemove", e => {
+gameContainer.addEventListener("mousemove", e => {
   const scrollOffset = [
     window.pageXOffset || document.documentElement.scrollLeft,
     window.pageYOffset || document.documentElement.scrollTop
@@ -43,7 +44,7 @@ window.addEventListener("mousemove", e => {
   mousePosition = position;
 });
 
-window.addEventListener("mouseup", e => {
+gameContainer.addEventListener("mouseup", e => {
   if (magnitude(game.hero.velocity) === 0) {
     const mouseToHeroLength = magnitude(mouseToHero);
     const velocity = mouseToHero
@@ -58,7 +59,7 @@ window.addEventListener("mouseup", e => {
   }
 });
 
-window.addEventListener("touchstart", e => {
+gameContainer.addEventListener("touchstart", e => {
   const scrollOffset = [
     window.pageXOffset || document.documentElement.scrollLeft,
     window.pageYOffset || document.documentElement.scrollTop
@@ -71,7 +72,7 @@ window.addEventListener("touchstart", e => {
   );
 });
 
-window.addEventListener("touchend", e => {
+gameContainer.addEventListener("touchend", e => {
   if (magnitude(game.hero.velocity) === 0) {
     mouseToHero = game.hero.position.map(
       (val, i) => val - mousePosition[i] + game.hero.size / 2

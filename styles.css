@@ -2,18 +2,43 @@
   --cell-size: 64px;
 }
 
+body, html {
+  margin: 0;
+  font-family: sans-serif;
+}
+
 body {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: 100vh;
+}
+
+@keyframes open-items {
+  0% {max-width: 0;}
+  100% {max-width: 100px;}
+}
+
+.items {
+  transition: all 1s;
+  width: 100px;
+  max-width: 0;
+}
+
+.items--open {
+  max-width: 100px;
+}
+
+.game {
+  position: relative;
+}
+
+.game-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow: scroll;
   background-color: #202;
-  font-family: sans-serif;
-}
-
-.game {
-  position: relative;
 }
 
 .game-dialog {
@@ -325,6 +350,10 @@ body {
   opacity: 0;
 }
 
+.hidden {
+  display: none;
+}
+
 .fade-in {
   animation: fade-in 500ms;
 }
@@ -334,7 +363,7 @@ body {
   opacity: 0;
 }
 
-.story {
+.game__level-story {
   margin-top: 8px;
   color: #fff;
   padding: 16px 32px;
@@ -343,7 +372,7 @@ body {
   text-align: center;
 }
 
-.story br {
+.game__level-story br {
   font-size: 20px;
 }
 

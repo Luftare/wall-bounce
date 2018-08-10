@@ -59,8 +59,8 @@ class Game {
     const level = this.levelData;
     this.globalInventory = this.globalInventory.filter((item, i, arr) => arr.indexOf(item) === i);//remove duplicate items
     field.innerHTML = "";
-    document.querySelector(".story").innerHTML = parseDialog(level.mapStory);
-    document.querySelector(".story").classList.remove("invisible");
+    document.querySelector(".game__level-story").innerHTML = parseDialog(level.mapStory);
+    document.querySelector(".game__level-story").classList.remove("invisible");
     field.style.width = `${level.mapSize[0] * CELL_SIZE}px`;
     field.style.height = `${level.mapSize[1] * CELL_SIZE}px`;
     this.entities = level.entities.filter(e => e.type !== HERO).map(o => new obstacleConstructors[o.type](o));
@@ -85,6 +85,7 @@ class Game {
         e.borders.classList.remove('hovering');
       }
     });
+    document.querySelector(".game__level-story").classList.add("invisible");
     if(document.querySelector('.game-dialog')) field.removeChild(this.dialog);
     const element = document.createElement("div");
     element.classList.add("game-dialog");
@@ -110,6 +111,7 @@ class Game {
         e.borders.classList.add('hovering');
       }
     });
+    document.querySelector(".game__level-story").classList.remove("invisible");
   }
 
   finishLevel(nextLevelId = this.levelId + 1) {
@@ -121,7 +123,6 @@ class Game {
     };
     this.openDialog(text, buttonText, buttonHandler);
     this.hero.element.classList.add("invisible");
-    document.querySelector(".story").classList.add("invisible");
   }
 
   pause() {
