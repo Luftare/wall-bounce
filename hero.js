@@ -225,7 +225,7 @@ class Hero {
     this.arrow.classList[moving ? "add" : "remove"]("hero__arrow--hidden");
     element.classList[moving && !game.paused ? "add" : "remove"]("run");
 
-    statusPower.innerHTML = `${this.power} Power`;
-    statusFitness.innerHTML = `${this.fitness} Fitness`;
+    statusPower.innerHTML = `Power: ${this.power}`;
+    statusFitness.innerHTML = `Fitness: ${this.fitness}`;
   }
 }
