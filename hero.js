@@ -31,7 +31,7 @@ class Hero {
 
     const arrow = document.createElement("div");
     arrow.classList = "hero__arrow";
-    element.appendChild(arrow);
+    borders.appendChild(arrow);
     this.arrow = arrow;
     allItems.filter(item => item.owned && item.equipped).forEach(item => item.equip(this));
   }
@@ -190,7 +190,7 @@ class Hero {
   }
 
   charge(velocity) {
-    if(this.fitness <= 0) return;
+    if(this.fitness <= 0 || document.querySelector('.game-dialog--visible')) return;
     this.fitness--;
     this.velocity = velocity;
   }

@@ -50,7 +50,7 @@ const ITEM_LIGHT_SLIPPERS = {
   name: 'Light Slippers',
   description: 'Move freely',
   slot: FEET,
-  equipped: false,
+  equipped: true,
   owned: true,
   equip(self) {
     this.equipped = true;
