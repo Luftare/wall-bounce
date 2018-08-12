@@ -2,6 +2,7 @@ class Hero {
   constructor(conf) {
     const position = conf.position;
     this[ON_EDGE_COLLISION] = conf[ON_EDGE_COLLISION];
+    this.dead = false;
     this.maxPower = 0;
     this.power = this.maxPower;
     this.maxFitness = 3;
@@ -81,6 +82,7 @@ class Hero {
   }
 
   die() {
+    this.dead = true;
     if (this.element.classList.contains("dead")) return;
     this.velocity = [0, 0];
     this.element.classList.add("dead");
@@ -192,6 +194,10 @@ class Hero {
     this.velocity = velocity;
   }
 
+  canStartMove() {
+    return magnitude(game.hero.velocity) === 0 && !this.dead;
+  }
+
   move(dt) {
     const velocityLength = Math.sqrt(
       this.velocity.reduce((acc, val) => acc + val ** 2, 0)
@@ -205,9 +211,15 @@ class Hero {
   }
 
   render() {
-    mouseToHero = game.hero.position.map(
-      (val, i) => val - mousePosition[i] + this.size / 2
-    );
+    if(isTouchDevice()) {
+      mouseToHero = touchStartPosition.map(
+        (val, i) => val - mousePosition[i]
+      );
+    } else {
+      mouseToHero = game.hero.position.map(
+        (val, i) => val - mousePosition[i] + this.size / 2
+      );
+    }
     const mouseToHeroLength = magnitude(mouseToHero);
     const { element, arrow } = this;
     const [heroX, heroY] = this.position;

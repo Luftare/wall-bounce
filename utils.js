@@ -14,6 +14,10 @@ function getSquareCollisionSide(a, b) {
   }
 }
 
+function isTouchDevice() {
+  return 'ontouchstart' in window;
+}
+
 function magnitude(vec) {
   return Math.sqrt(vec.reduce((acc, val) => acc + val ** 2, 0));
 }

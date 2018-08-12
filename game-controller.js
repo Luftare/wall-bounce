@@ -7,6 +7,7 @@ let game;
 let mousePosition = [0, 0];
 let mouseToHero = [10, 10];
 let currentLevel = 0;
+let touchStartPosition = [0, 0];
 
 window.addEventListener("load", () => {
   game = new Game();
@@ -45,7 +46,7 @@ gameContainer.addEventListener("mousemove", e => {
 });
 
 gameContainer.addEventListener("mouseup", e => {
-  if (magnitude(game.hero.velocity) === 0) {
+  if(game.hero.canStartMove()) {
     const mouseToHeroLength = magnitude(mouseToHero);
     const velocity = mouseToHero
       .map(val => val / mouseToHeroLength)
@@ -60,6 +61,18 @@ gameContainer.addEventListener("mouseup", e => {
 });
 
 gameContainer.addEventListener("touchstart", e => {
+  e.preventDefault();
+  const scrollOffset = [
+    window.pageXOffset || document.documentElement.scrollLeft,
+    window.pageYOffset || document.documentElement.scrollTop
+  ];
+  const offset = field.getBoundingClientRect();
+  const position = [e.changedTouches[0].pageX - offset.left - scrollOffset[0], e.changedTouches[0].pageY - offset.top - scrollOffset[1]];
+  touchStartPosition = position;
+});
+
+gameContainer.addEventListener("touchmove", e => {
+  e.preventDefault();
   const scrollOffset = [
     window.pageXOffset || document.documentElement.scrollLeft,
     window.pageYOffset || document.documentElement.scrollTop
@@ -67,13 +80,14 @@ gameContainer.addEventListener("touchstart", e => {
   const offset = field.getBoundingClientRect();
   const position = [e.changedTouches[0].pageX - offset.left - scrollOffset[0], e.changedTouches[0].pageY - offset.top - scrollOffset[1]];
   mousePosition = position;
-  mouseToHero = game.hero.position.map(
-    (val, i) => val - mousePosition[i] + game.hero.size / 2
+  mouseToHero = touchStartPosition.map(
+    (val, i) => val - mousePosition[i]
   );
 });
 
 gameContainer.addEventListener("touchend", e => {
-  if (magnitude(game.hero.velocity) === 0) {
+  e.preventDefault();
+  if (game.hero.canStartMove()) {
     mouseToHero = game.hero.position.map(
       (val, i) => val - mousePosition[i] + game.hero.size / 2
     );
