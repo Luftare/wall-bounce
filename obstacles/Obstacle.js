@@ -41,10 +41,5 @@ class Obstacle {
     })
   }
 
-  openEndDialog(nextId) {
-    this.borders.classList.add("center");
-    game.finishLevel(nextId);
-  }
-
   onCollision() {}
 }

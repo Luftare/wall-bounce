@@ -63,6 +63,7 @@ class Game {
     field.style.height = `${level.mapSize[1] * CELL_SIZE}px`;
     this.entities = level.entities.filter(e => e.type !== HERO).map(o => new obstacleConstructors[o.type](o));
     this.hero = new Hero(level.entities.find(e => e.type === HERO));
+    if(level.initScript) eval(level.initScript);
     renderItems(allItems);
     this.paused = false;
   }

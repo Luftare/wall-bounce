@@ -175,8 +175,10 @@ class Hero {
   }
 
   receiveItem(item) {
+    console.log(item)
     item.owned = true;
     if(!allItems.find(e => e.slot === item.slot && item.equipped)) item.equip(this);
+    renderItems();
   }
 
   equipItem(item) {

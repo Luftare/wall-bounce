@@ -14,19 +14,47 @@ const ITEM_SILVER_SWORD = {
   }
 };
 
-const ITEM_STEEP_HAMMER = {
-  name: 'Steel Hammer',
-  description: '+3 power',
+const ITEM_ANCIENT_RAZOR = {
+  name: 'Ancient Razor',
+  description: '+2 power and slice through',
   slot: HAND,
   equipped: false,
   owned: false,
   equip(self) {
     this.equipped = true;
-    self.power += 3;
+    self.power += 2;
+    game.entities = game.entities.map(entity => {
+      if(entity instanceof Orc) {
+        entity.nonBlocking = true;
+      }
+      return entity;
+    })
   },
   unEquip(self) {
     this.equipped = false;
-    self.power -= 3;
+    self.power -= 2;
+    game.entities = game.entities.map(entity => {
+      if(entity instanceof Orc) {
+        entity.nonBlocking = false;
+      }
+      return entity;
+    })
+  }
+};
+
+const ITEM_STEEP_HAMMER = {
+  name: 'Steel Hammer',
+  description: '+4 power',
+  slot: HAND,
+  equipped: false,
+  owned: false,
+  equip(self) {
+    this.equipped = true;
+    self.power += 4;
+  },
+  unEquip(self) {
+    this.equipped = false;
+    self.power -= 4;
   }
 };
 
@@ -50,8 +78,8 @@ const ITEM_LIGHT_SLIPPERS = {
   name: 'Light Slippers',
   description: 'Move freely',
   slot: FEET,
-  equipped: true,
-  owned: true,
+  equipped: false,
+  owned: false,
   equip(self) {
     this.equipped = true;
     this.temp = self.canStartMove;
@@ -63,4 +91,4 @@ const ITEM_LIGHT_SLIPPERS = {
   }
 };
 
-const allItems = [ITEM_SILVER_SWORD, ITEM_STEEP_HAMMER, ITEM_LEATHER_BOOTS, ITEM_LIGHT_SLIPPERS];
+const allItems = [ITEM_SILVER_SWORD, ITEM_STEEP_HAMMER, ITEM_ANCIENT_RAZOR, ITEM_LEATHER_BOOTS, ITEM_LIGHT_SLIPPERS];
