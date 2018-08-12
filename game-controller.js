@@ -61,7 +61,6 @@ gameContainer.addEventListener("mouseup", e => {
 });
 
 gameContainer.addEventListener("touchstart", e => {
-  e.preventDefault();
   const scrollOffset = [
     window.pageXOffset || document.documentElement.scrollLeft,
     window.pageYOffset || document.documentElement.scrollTop
@@ -86,11 +85,7 @@ gameContainer.addEventListener("touchmove", e => {
 });
 
 gameContainer.addEventListener("touchend", e => {
-  e.preventDefault();
   if (game.hero.canStartMove()) {
-    mouseToHero = game.hero.position.map(
-      (val, i) => val - mousePosition[i] + game.hero.size / 2
-    );
     const mouseToHeroLength = magnitude(mouseToHero);
     const velocity = mouseToHero
       .map(val => val / mouseToHeroLength)
