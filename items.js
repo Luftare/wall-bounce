@@ -46,4 +46,21 @@ const ITEM_LEATHER_BOOTS = {
   }
 };
 
-const allItems = [ITEM_SILVER_SWORD, ITEM_STEEP_HAMMER, ITEM_LEATHER_BOOTS];
+const ITEM_LIGHT_SLIPPERS = {
+  name: 'Light Slippers',
+  description: 'Move freely',
+  slot: FEET,
+  equipped: false,
+  owned: true,
+  equip(self) {
+    this.equipped = true;
+    this.temp = self.canStartMove;
+    self.canStartMove = () => !self.dead && self.fitness > 0;
+  },
+  unEquip(self) {
+    this.equipped = false;
+    self.canStartMove = this.temp;
+  }
+};
+
+const allItems = [ITEM_SILVER_SWORD, ITEM_STEEP_HAMMER, ITEM_LEATHER_BOOTS, ITEM_LIGHT_SLIPPERS];

@@ -190,12 +190,13 @@ class Hero {
   }
 
   charge(velocity) {
+    if(this.fitness <= 0) return;
     this.fitness--;
     this.velocity = velocity;
   }
 
   canStartMove() {
-    return magnitude(game.hero.velocity) === 0 && !this.dead;
+    return magnitude(game.hero.velocity) === 0 && !this.dead && this.fitness > 0;
   }
 
   move(dt) {
@@ -234,7 +235,7 @@ class Hero {
     this.arrow.style.transform = `translate(-50%, 0) rotate(${arrowAngle}deg) translateY(${this
       .size * 0.7}px)`;
 
-    this.arrow.classList[moving ? "add" : "remove"]("hero__arrow--hidden");
+    this.arrow.classList[this.canStartMove() ? "remove" : "add"]("hero__arrow--hidden");
     element.classList[moving && !game.paused ? "add" : "remove"]("run");
 
     statusPower.innerHTML = `Power: ${this.power}`;

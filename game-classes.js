@@ -96,7 +96,10 @@ class Game {
       </div>
     `;
     field.appendChild(element);
-    document.querySelector(".game-dialog__button").addEventListener("click", buttonHandler);
+    document.querySelector(".game-dialog__button").addEventListener("click", (e) => {
+      e.stopPropagation();
+      buttonHandler();
+    }, true);
     this.dialog = element;
   }
 
