@@ -8,9 +8,7 @@ body, html {
 }
 
 body {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-rows: 100vh;
+
 }
 
 @keyframes open-items {
@@ -19,13 +17,67 @@ body {
 }
 
 .items {
-  transition: all 1s;
-  width: 100px;
-  max-width: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transition: all 300ms;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #101;
+  color: white;
+  z-index: 50;
+  box-shadow: 0 0 8px #000;
+  box-sizing: border-box;
+  width: 0px;
+  padding: 8px 0;
 }
 
 .items--open {
-  max-width: 100px;
+  width: 350px;
+  padding: 8px;
+}
+
+.items__toggle {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  color: white;
+  z-index: 40;
+  padding: 16px;
+  background-color: green;
+  cursor: pointer;
+}
+
+.items__close {
+  display: inline-block;
+  color: white;
+  background-color: red;
+  z-index: 40;
+  padding: 16px;
+  cursor: pointer;
+}
+
+.items__container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 1fr);
+  grid-gap: 4px;
+  font-size: 14px;
+}
+
+.item-icon {
+  background-color: #CC0;
+  color: #101;
+  padding: 4px;
+  cursor: pointer;
+  border: 3px solid transparent;
+}
+
+.item-icon--equipped {
+  border: 3px solid red;
+}
+
+.item-icon__name {
+  font-weight: bold;
 }
 
 .game {
@@ -37,8 +89,8 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: scroll;
   background-color: #202;
+  height: 100vh;
 }
 
 .game-dialog {

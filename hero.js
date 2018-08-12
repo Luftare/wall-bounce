@@ -32,8 +32,7 @@ class Hero {
     arrow.classList = "hero__arrow";
     element.appendChild(arrow);
     this.arrow = arrow;
-
-    game.globalInventory.forEach(item => item.equip(this));
+    allItems.filter(item => item.owned && item.equipped).forEach(item => item.equip(this));
   }
 
   update(dt) {
@@ -171,6 +170,21 @@ class Hero {
   handleCollisions(dt) {
     this.handleBoundaryCollisions(dt);
     this.handleObstacleCollisions(dt);
+  }
+
+  receiveItem(item) {
+    item.owned = true;
+    if(!allItems.find(e => e.slot === item.slot && item.equipped)) item.equip(this);
+  }
+
+  equipItem(item) {
+    const currentItem = allItems.find(e => e.slot === item.slot && e.equipped);
+    if(currentItem) this.unEquipItem(currentItem);
+    item.equip(this);
+  }
+
+  unEquipItem(item) {
+    item.unEquip(this);
   }
 
   charge(velocity) {

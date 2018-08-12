@@ -13,6 +13,7 @@
     <script src="router.js" defer></script>
     <script src="utils.js" defer></script>
     <script src="game.js" defer></script>
+    <script src="items-controller.js" defer></script>
     <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
   <body>
@@ -27,7 +28,14 @@
       </div>
     </div>
     <div class="items">
-      Items
+      <div class="items__close">Close</div>
+      <h4>Hand</h4>
+      <div class="items__container items__container--hand"></div>
+      <h4>Chest</h4>
+      <div class="items__container items__container--Chest"></div>
+      <h4>Feet</h4>
+      <div class="items__container items__container--feet"></div>
     </div>
+    <div class="items__toggle">Items</div>
   </body>
 </html>

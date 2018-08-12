@@ -31,6 +31,10 @@ const NUMBER = 'PROP_NUMBER';
 const TEXT = 'PROP_TEXT';
 const BOOLEAN = 'PROP_BOOLEAN';
 
+const HAND = 'HAND';
+const CHEST = 'CHEST';
+const FEET = 'FEET';
+
 const events = [ON_COLLISION, ON_EDGE_COLLISION];
 const entityTypes = [HERO, PRINCESS, WIZARD, TREE, ORC, WALL, FLOWER, WIND, SPRITE];
 const directions = [UP, DOWN, LEFT, RIGHT];

@@ -34,7 +34,6 @@ class Loop {
 
 class Game {
   constructor() {
-    this.globalInventory = [];
     this.edgeLinks = [];
     this.levelId = '';
     this.levelData = {};
@@ -57,7 +56,6 @@ class Game {
 
   startLevel() {
     const level = this.levelData;
-    this.globalInventory = this.globalInventory.filter((item, i, arr) => arr.indexOf(item) === i);//remove duplicate items
     field.innerHTML = "";
     document.querySelector(".game__level-story").innerHTML = parseDialog(level.mapStory);
     document.querySelector(".game__level-story").classList.remove("invisible");
@@ -65,6 +63,7 @@ class Game {
     field.style.height = `${level.mapSize[1] * CELL_SIZE}px`;
     this.entities = level.entities.filter(e => e.type !== HERO).map(o => new obstacleConstructors[o.type](o));
     this.hero = new Hero(level.entities.find(e => e.type === HERO));
+    renderItems(allItems);
     this.paused = false;
   }
 
